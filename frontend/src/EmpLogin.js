@@ -1,6 +1,8 @@
 import React, { useState } from 'react'; // Import React and useState
+import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
 
 const EmpLogin = () => {
+    const navigate = useNavigate(); // Initialize useNavigate
     const [name, setName] = useState(''); // State for name
     const [surname, setSurname] = useState(''); // State for surname
     const [email, setEmail] = useState(''); // State for email
@@ -29,6 +31,9 @@ const EmpLogin = () => {
             setSurname('');
             setEmail('');
             setPassword('');
+
+            // Redirect to Dashboard after successful login
+            navigate('/dashboard'); // Navigate to Dashboard page
         } else {
             setMessage(data.message); // Error message
         }

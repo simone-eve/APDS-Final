@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
 import './Dashboard.css'; // Import your CSS file
 
 const Dashboard = () => {
+  const navigate = useNavigate(); // Initialize useNavigate
   const [payments, setPayments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -26,31 +28,34 @@ const Dashboard = () => {
   }, []);
 
   const handleVerify = async (paymentId) => {
-  try {
-    const response = await fetch(`http://localhost:3000/api/payments/${paymentId}/verify`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+    try {
+      const response = await fetch(`http://localhost:3000/api/payments/${paymentId}/verify`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
 
-    if (!response.ok) {
-      throw new Error('Failed to verify payment');
+      if (!response.ok) {
+        throw new Error('Failed to verify payment');
+      }
+
+      // Update the local state to reflect the changes
+      setPayments((prevPayments) =>
+        prevPayments.map((payment) =>
+          payment.id === paymentId ? { ...payment, verification: 'Verified' } : payment
+        )
+      );
+
+      console.log(`Payment with ID ${paymentId} verified`);
+    } catch (error) {
+      setError(error.message);
     }
+  };
 
-    // Update the local state to reflect the changes
-    setPayments((prevPayments) =>
-      prevPayments.map((payment) =>
-        payment.id === paymentId ? { ...payment, verification: 'Verified' } : payment
-      )
-    );
-
-    console.log(`Payment with ID ${paymentId} verified`);
-  } catch (error) {
-    setError(error.message);
-  }
-};
-
+  const handleAddUserClick = () => {
+    navigate('/employees'); // Navigate to the Employees page
+  };
 
   if (loading) {
     return <p className="loading-message">Loading payments...</p>;
@@ -104,9 +109,9 @@ const Dashboard = () => {
           </tbody>
         </table>
       )}
-      <button className="button">Add Payment</button> {/* Example button */}
+      <button className="button" onClick={handleAddUserClick}>Add new user</button> {/* Button with onClick handler */}
     </div>
   );
 };
 
-export default Dashboard;
+export default Dashboard; // Default export
