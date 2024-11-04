@@ -2,7 +2,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import './User.css'; // Import your CSS file for styling
-
+//___________code attribution___________
+//The following code was taken from Stack Overflow
+//Author:  Unkown
+//Link: https://stackoverflow.com/questions/54952355/how-to-post-data-from-react
 const User = () => {
   const navigate = useNavigate(); // Initialize useNavigate
   const [fullName, setFullName] = useState('');
@@ -59,7 +62,10 @@ const User = () => {
   const handleDashboardClick = () => {
     navigate('/dashboard'); // Navigate to Dashboard
   };
-
+//___________code attribution___________
+//The following code was taken from Stack Overflow
+//Author:  Unkown
+//Link: https://stackoverflow.com/questions/54952355/how-to-post-data-from-react
   return (
     <div className="user-container">
       <h1>Add New User</h1>

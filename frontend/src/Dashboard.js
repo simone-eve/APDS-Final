@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Dashboard.css';
+//___________code attribution___________
+//The following code was taken from Stack Overflow
+//Author:  Unkown
+//Link: https://stackoverflow.com/questions/54952355/how-to-post-data-from-react
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -39,7 +43,10 @@ const Dashboard = () => {
       if (!response.ok) {
         throw new Error('Failed to verify payment');
       }
-
+//___________code attribution___________
+//The following code was taken from Stack Overflow
+//Author:  Unkown
+//Link: https://stackoverflow.com/questions/54952355/how-to-post-data-from-react
       const updatedPayment = await response.json();
       setPayments((prevPayments) =>
         prevPayments.map((payment) =>

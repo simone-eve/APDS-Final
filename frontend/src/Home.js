@@ -6,6 +6,11 @@ function Home() {
   const navigate = useNavigate();
 
   // Handler to navigate to Employees page
+
+  //___________code attribution___________
+//The following code was taken from Stack Overflow
+//Author:  Unkown
+//Link: https://stackoverflow.com/questions/54952355/how-to-post-data-from-react
   const handleEmpClick = () => {
     navigate('/emp-login');
   };

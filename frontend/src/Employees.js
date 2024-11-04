@@ -8,7 +8,10 @@ const Employees = () => {
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
     const [loading, setLoading] = useState(false); // New loading state
-
+//___________code attribution___________
+//The following code was taken from Stack Overflow
+//Author:  Unkown
+//Link: https://stackoverflow.com/questions/54952355/how-to-post-data-from-react
     const handleSubmit = async (event) => {
         event.preventDefault();
         setLoading(true); // Set loading to true when submitting

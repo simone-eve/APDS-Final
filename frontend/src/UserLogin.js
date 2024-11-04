@@ -11,7 +11,10 @@ function UserLogin() {
 
     const handleLogin = async (event) => {
         event.preventDefault();
-        
+        //___________code attribution___________
+//The following code was taken from Stack Overflow
+//Author:  Unkown
+//Link: https://stackoverflow.com/questions/54952355/how-to-post-data-from-react
         // Send login data to backend
         const response = await fetch('http://localhost:3000/api/userLogin', {
             method: 'POST',
