@@ -168,14 +168,47 @@ const requestHandler = async (req, res) => {
         return; // Prevent further processing after handling this request
     }
 
+    // Handle user login
+if (req.method === 'POST' && req.url === '/api/userLogin') {
+    let body = '';
+
+    // Collect data from the request
+    req.on('data', chunk => {
+        body += chunk.toString(); // Convert Buffer to string
+    });
+
+    req.on('end', async () => {
+        const { fullName, accountNumber, password } = JSON.parse(body);
+
+        // Find the user by fullName, accountNumber, and password
+        try {
+            const user = await User.findOne({ fullName, accountNumber, password });
+            if (!user) {
+                res.writeHead(401, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ message: 'Invalid full name, account number, or password' }));
+                return;
+            }
+
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ message: 'User login successful!' }));
+        } catch (error) {
+            console.error('Error while processing user login:', error);
+            res.writeHead(500, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ message: 'Internal server error' }));
+        }
+    });
+    return; // Prevent further processing after handling this request
+}
+
+
     // Handle verifying a payment
     if (req.method === 'PUT' && req.url.startsWith('/api/payments/')) {
         const paymentId = req.url.split('/')[3]; // Extract payment ID from URL
         try {
             const updatedPayment = await PaymentForm.findByIdAndUpdate(
                 paymentId,
-                { verification: 'Verified' }, // Update the verification status
-                { new: true } // Return the updated document
+                { verification: 'Verified' },
+                { new: true }
             );
 
             if (!updatedPayment) {
@@ -185,14 +218,15 @@ const requestHandler = async (req, res) => {
             }
 
             res.writeHead(200, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify(updatedPayment)); // Send the updated payment back to the client
+            res.end(JSON.stringify(updatedPayment));
         } catch (error) {
             console.error('Error while verifying payment:', error);
             res.writeHead(500, { 'Content-Type': 'application/json' });
             res.end(JSON.stringify({ message: 'Internal server error' }));
         }
-        return; // Prevent further processing after handling this request
+        return;
     }
+
 
     // Handle 404 Not Found
     res.writeHead(404, { 'Content-Type': 'text/html' });

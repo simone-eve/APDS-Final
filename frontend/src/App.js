@@ -1,13 +1,13 @@
-import React from 'react'; // Import React
+import React from 'react';
 import './App.css';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; // Import React Router
-import Employees from './Employees'; // Import the Employees component
-import Home from './Home'; // Import the Home component
-import EmpLogin from './EmpLogin'; // Import the EmpLogin component
-import PaymentForm from './PaymentForm'; // Import the PaymentForm component
-import Dashboard from './Dashboard'; // Import the Dashboard component
-import User  from './User';
-
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Employees from './Employees';
+import Home from './Home';
+import EmpLogin from './EmpLogin';
+import PaymentForm from './PaymentForm';
+import Dashboard from './Dashboard';
+import UserLogin from './UserLogin'; // Import the UserLogin component
+import User from './User';
 function App() {
   console.log("Rendering App component");
 
@@ -15,13 +15,15 @@ function App() {
     <Router>
       <div className="App">
         <Routes>
-          <Route path="/" element={<Home />} /> {/* Home page */}
-          <Route path="/employees" element={<Employees />} /> {/* Employees page */}
-          <Route path="/emp-login" element={<EmpLogin />} /> {/* EmpLogin page */}
-          <Route path="/payment-form" element={<PaymentForm />} /> {/* PaymentForm page */}
-          <Route path="/dashboard" element={<Dashboard />} /> {/* Dashboard page */}
-          <Route path="/user" element={<User />} /> {/* Dashboard page */}
-       
+          <Route path="/" element={<Home />} />
+          <Route path="/employees" element={<Employees />} />
+          <Route path="/emp-login" element={<EmpLogin />} />
+          <Route path="/payment-form" element={<PaymentForm />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/user-login" element={<UserLogin />} /> {/* Add UserLogin route */}
+          <Route path="/user" element={<User />} /> {/* Add UserLogin route */}
+          
+
         </Routes>
       </div>
     </Router>

@@ -1,20 +1,22 @@
+// User.js
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import './User.css'; // Import your CSS file for styling
 
 const User = () => {
-  const [fullName, setFullName] = useState(''); // State for full name
-  const [idNumber, setIdNumber] = useState(''); // State for ID number
-  const [accountNumber, setAccountNumber] = useState(''); // State for account number
-  const [userId, setUserId] = useState(''); // State for user ID
-  const [password, setPassword] = useState(''); // State for password
-  const [message, setMessage] = useState(''); // State for messages (success/error)
-  const [loading, setLoading] = useState(false); // State for loading
+  const navigate = useNavigate(); // Initialize useNavigate
+  const [fullName, setFullName] = useState('');
+  const [idNumber, setIdNumber] = useState('');
+  const [accountNumber, setAccountNumber] = useState('');
+  const [userId, setUserId] = useState('');
+  const [password, setPassword] = useState('');
+  const [message, setMessage] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (event) => {
-    event.preventDefault(); // Prevent default form submission
-    setLoading(true); // Set loading to true
+    event.preventDefault();
+    setLoading(true);
 
-    // Create the user object
     const user = {
       fullName,
       idNumber,
@@ -29,94 +31,94 @@ const User = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(user), // Send user data
+        body: JSON.stringify(user),
       });
 
-      const data = await response.json(); // Parse the JSON response
-      setLoading(false); // Set loading to false
+      const data = await response.json();
+      setLoading(false);
 
       if (response.ok) {
-        setMessage('User added successfully!'); // Success message
-        // Optionally clear the form fields
+        setMessage('User added successfully!');
         setFullName('');
         setIdNumber('');
         setAccountNumber('');
         setUserId('');
         setPassword('');
+
+        // Optionally navigate to PaymentForm on successful user addition
+        // navigate('/payment-form'); 
       } else {
-        setMessage(data.message); // Error message
+        setMessage(data.message || 'Failed to add user');
       }
     } catch (error) {
       setLoading(false);
-      setMessage('Failed to add user.'); // Handle fetch error
+      setMessage('Failed to add user. Please try again later.');
     }
+  };
+
+  const handleDashboardClick = () => {
+    navigate('/dashboard'); // Navigate to Dashboard
   };
 
   return (
     <div className="user-container">
       <h1>Add New User</h1>
       <form onSubmit={handleSubmit}>
-        <div>
-          <label>
-            Full Name:
-            <input
-              type="text"
-              value={fullName}
-              onChange={(e) => setFullName(e.target.value)} // Update state on change
-              required
-            />
-          </label>
-        </div>
-        <div>
-          <label>
-            ID Number:
-            <input
-              type="text"
-              value={idNumber}
-              onChange={(e) => setIdNumber(e.target.value)} // Update state on change
-              required
-            />
-          </label>
-        </div>
-        <div>
-          <label>
-            Account Number:
-            <input
-              type="text"
-              value={accountNumber}
-              onChange={(e) => setAccountNumber(e.target.value)} // Update state on change
-              required
-            />
-          </label>
-        </div>
-        <div>
-          <label>
-            User ID:
-            <input
-              type="text"
-              value={userId}
-              onChange={(e) => setUserId(e.target.value)} // Update state on change
-              required
-            />
-          </label>
-        </div>
-        <div>
-          <label>
-            Password:
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)} // Update state on change
-              required
-            />
-          </label>
-        </div>
-        <button type="submit" disabled={loading}>Add User</button> {/* Disable while loading */}
+        <label>
+          Full Name:
+          <input
+            type="text"
+            value={fullName}
+            onChange={(e) => setFullName(e.target.value)}
+            required
+          />
+        </label>
+        <label>
+          ID Number:
+          <input
+            type="text"
+            value={idNumber}
+            onChange={(e) => setIdNumber(e.target.value)}
+            required
+          />
+        </label>
+        <label>
+          Account Number:
+          <input
+            type="text"
+            value={accountNumber}
+            onChange={(e) => setAccountNumber(e.target.value)}
+            required
+          />
+        </label>
+        <label>
+          User ID:
+          <input
+            type="text"
+            value={userId}
+            onChange={(e) => setUserId(e.target.value)}
+            required
+          />
+        </label>
+        <label>
+          Password:
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </label>
+        <button type="submit" disabled={loading}>
+          {loading ? 'Adding...' : 'Add User'}
+        </button>
       </form>
-      {loading && <p>Loading...</p>} {/* Loading message */}
-      {message && <p>{message}</p>} {/* Success or error message */}
+      {message && <p>{message}</p>}
+      <button onClick={handleDashboardClick} className="dashboard-button">
+        Dashboard
+      </button>
     </div>
   );
 };
 
-export default User; // Default export
+export default User;

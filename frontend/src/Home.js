@@ -1,18 +1,18 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
-import './Home.css'; // Import the CSS file
+import { useNavigate } from 'react-router-dom';
+import './Home.css';
 
 function Home() {
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
 
   // Handler to navigate to Employees page
   const handleEmpClick = () => {
-    navigate('/emp-login'); // Navigate to Employees page
+    navigate('/emp-login');
   };
 
-  // Handler to navigate to Dashboard
+  // Handler to navigate to UserLogin page
   const handleUserClick = () => {
-    navigate('/dashboard'); // Navigate to Dashboard page
+    navigate('/user-login'); // Navigate to UserLogin instead of Dashboard
   };
 
   return (
@@ -20,8 +20,8 @@ function Home() {
       <h1>Welcome to the Employee Dashboard</h1>
       <p>Please Login to Proceed to the next page</p>
       <div className="home-buttons">
-        <button className="home-button" onClick={handleEmpClick}>emp</button> {/* Button for Employees */}
-        <button className="home-button" onClick={handleUserClick}>user</button> {/* Button for Dashboard */}
+        <button className="home-button" onClick={handleEmpClick}>emp</button>
+        <button className="home-button" onClick={handleUserClick}>user</button>
       </div>
     </div>
   );

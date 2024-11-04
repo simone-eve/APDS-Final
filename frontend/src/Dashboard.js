@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
-import './Dashboard.css'; // Import your CSS file
+import { useNavigate } from 'react-router-dom';
+import './Dashboard.css';
 
 const Dashboard = () => {
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
   const [payments, setPayments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -11,12 +11,12 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchPayments = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/payments'); // Ensure this endpoint is correct
+        const response = await fetch('http://localhost:3000/api/payments');
         if (!response.ok) {
           throw new Error('Failed to fetch payments');
         }
         const data = await response.json();
-        setPayments(data); // Assuming your API returns an array of payments
+        setPayments(data);
       } catch (error) {
         setError(error.message);
       } finally {
@@ -40,10 +40,10 @@ const Dashboard = () => {
         throw new Error('Failed to verify payment');
       }
 
-      // Update the local state to reflect the changes
+      const updatedPayment = await response.json();
       setPayments((prevPayments) =>
         prevPayments.map((payment) =>
-          payment.id === paymentId ? { ...payment, verification: 'Verified' } : payment
+          payment._id === updatedPayment._id ? updatedPayment : payment
         )
       );
 
@@ -54,7 +54,7 @@ const Dashboard = () => {
   };
 
   const handleAddUserClick = () => {
-    navigate('/employees'); // Navigate to the Employees page
+    navigate('/user');
   };
 
   if (loading) {
@@ -81,13 +81,13 @@ const Dashboard = () => {
               <th>Account Number</th>
               <th>Bank Name</th>
               <th>SWIFT Code</th>
-              <th>Verification</th> {/* Added verification column */}
-              <th>Actions</th> {/* New column for actions */}
+              <th>Verification</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             {payments.map((payment) => (
-              <tr key={payment.id}> {/* Adjust the key based on your payment data structure */}
+              <tr key={payment._id}>
                 <td>{payment.amount}</td>
                 <td>{payment.currency}</td>
                 <td>{payment.provider}</td>
@@ -95,11 +95,11 @@ const Dashboard = () => {
                 <td>{payment.accountNumber}</td>
                 <td>{payment.bankName}</td>
                 <td>{payment.swiftCode}</td>
-                <td>{payment.verification}</td> {/* Display verification status */}
+                <td>{payment.verification}</td>
                 <td>
                   <button 
                     className="button" 
-                    onClick={() => handleVerify(payment.id)} // Call verify on click
+                    onClick={() => handleVerify(payment._id)}
                   >
                     Verify
                   </button>
@@ -109,9 +109,9 @@ const Dashboard = () => {
           </tbody>
         </table>
       )}
-      <button className="button" onClick={handleAddUserClick}>Add new user</button> {/* Button with onClick handler */}
+      <button className="button" onClick={handleAddUserClick}>Add new user</button>
     </div>
   );
 };
 
-export default Dashboard; // Default export
+export default Dashboard;
