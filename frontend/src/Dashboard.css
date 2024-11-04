@@ -1,0 +1,87 @@
+/* General Dashboard Styles */
+.dashboard-container {
+    max-width: 1200px; /* Limit the width of the dashboard */
+    margin: 20px auto; /* Center the dashboard */
+    padding: 30px; /* Increased padding for a more spacious look */
+    background-color: #f9f9f9; /* Light background for a softer look */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15); /* Enhanced shadow for depth */
+    font-family: 'Arial', sans-serif; /* Consistent font */
+}
+
+h2 {
+    font-size: 2.5em; /* Bigger heading font */
+    margin-bottom: 20px; /* Space below heading */
+    color: #333; /* Darker color for better contrast */
+    text-align: center; /* Center the heading */
+    font-weight: bold; /* Bold text for emphasis */
+}
+
+/* Table Styles */
+.payments-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.payments-table th, .payments-table td {
+    border: 1px solid #dee2e6; /* Light border for table */
+    padding: 15px; /* Padding for cells */
+    text-align: left; /* Align text to left */
+    font-size: 1em; /* Standard font size */
+}
+
+.payments-table th {
+    background-color: #007bff; /* Primary color for header */
+    color: white; /* White text for contrast */
+    text-transform: uppercase; /* Uppercase text */
+}
+
+.payments-table tr:nth-child(even) {
+    background-color: #f2f2f2; /* Light gray for even rows */
+}
+
+.payments-table tr:hover {
+    background-color: #e0e7ff; /* Change hover effect for better visibility */
+    transition: background-color 0.3s; /* Smooth transition */
+}
+
+/* Loading and Error Messages */
+.loading-message, .error-message {
+    font-size: 1.2em; /* Increased font size for visibility */
+    color: #dc3545; /* Red color for error messages */
+    margin: 20px 0; /* Space around messages */
+    text-align: center; /* Center the messages */
+}
+
+/* Button Styles */
+.button {
+    padding: 10px 20px; /* Button padding */
+    color: white; /* Button text color */
+    background-color: #007bff; /* Button background color */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners for button */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s; /* Smooth transition */
+    display: block; /* Display as block to center */
+    margin: 20px auto; /* Center the button */
+}
+
+.button:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .dashboard-container {
+        padding: 20px; /* Less padding on smaller screens */
+    }
+
+    h2 {
+        font-size: 2em; /* Smaller heading on mobile */
+    }
+
+    .payments-table th, .payments-table td {
+        padding: 10px; /* Less padding in table cells on mobile */
+    }
+}

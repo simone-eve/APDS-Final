@@ -1,0 +1,54 @@
+/* Home.css */
+
+.home-container {
+    text-align: center;
+    margin: 50px auto; /* Center the container */
+    padding: 40px;
+    max-width: 600px; /* Limit the width for better readability */
+    background: linear-gradient(to bottom right, #4e54c8, #8f94fb); /* Updated gradient for a softer look */
+    border-radius: 20px; /* Slightly more rounded corners */
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3); /* Stronger shadow for depth */
+    color: #ffffff; /* White text for better contrast */
+    font-family: 'Helvetica Neue', Arial, sans-serif; /* More modern font */
+}
+
+.home-container h1 {
+    font-size: 2.8em; /* Larger heading for emphasis */
+    margin-bottom: 15px; /* More spacing below heading */
+    letter-spacing: 1px; /* Slight spacing between letters */
+}
+
+.home-container p {
+    font-size: 1.3em; /* Slightly larger paragraph size */
+    margin-bottom: 30px; /* More spacing below paragraph */
+    line-height: 1.5; /* Increased line height for readability */
+}
+
+.home-buttons {
+    display: flex; /* Flexbox for layout */
+    justify-content: center; /* Center buttons */
+    gap: 30px; /* Increased spacing between buttons */
+}
+
+.home-button {
+    padding: 15px 35px; /* Padding for buttons */
+    font-size: 1.1em; /* Increased button font size */
+    background-color: #ffffff; /* Button background color */
+    color: #4e54c8; /* Button text color matching the gradient */
+    border: 2px solid transparent; /* Border for hover effect */
+    border-radius: 25px; /* More rounded button corners */
+    cursor: pointer; /* Pointer cursor */
+    transition: background-color 0.3s, transform 0.3s, border-color 0.3s; /* Smooth transitions */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.home-button:hover {
+    background-color: #f8f8f8; /* Light background on hover */
+    transform: translateY(-2px); /* Slightly lift button on hover */
+    border-color: #4e54c8; /* Border color on hover */
+}
+
+.home-button:focus {
+    outline: none; /* Remove default outline */
+    box-shadow: 0 0 5px rgba(78, 84, 200, 0.5); /* Add focus ring */
+}
