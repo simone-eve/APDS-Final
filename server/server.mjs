@@ -7,7 +7,11 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import rateLimit from 'express-rate-limit';
 import { body, validationResult } from 'express-validator';
+import express from 'express';
+import bodyParser from 'body-parser';
 
+const app = express();
+app.use(bodyParser.json());
 app.use(bodyParser.json());
 app.use(cors());
 app.use(helmet());
