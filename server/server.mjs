@@ -19,7 +19,7 @@ app.use(morgan('combined'));
 app.use(express.json());
 
 // MongoDB connection string
-const mongoURI = 'your_mongo_uri_here';
+const mongoURI = 'mongodb+srv://simoneleroux2003:4IKn1Q2kBs44qaoE@apdscluster0.glasn.mongodb.net/?retryWrites=true&w=majority';
 mongoose.set('debug', true);
 
 const store = new ExpressBrute.MemoryStore(); 
