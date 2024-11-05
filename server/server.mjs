@@ -4,7 +4,7 @@ import cors from 'cors'; // Import CORS
 import { parse } from 'querystring';
 
 // MongoDB connection string
-const mongoURI = 'mongodb://localhost:27017/APD'; // Replace with your actual database name
+const mongoURI = 'mongodb+srv://simoneleroux2003:4IKn1Q2kBs44qaoE@apdscluster0.glasn.mongodb.net/APD'; // Replace with your actual database name
 
 // Connect to MongoDB
 mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
