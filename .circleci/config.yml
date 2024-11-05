@@ -47,8 +47,7 @@ jobs:
     steps:
       - checkout
       - newman/newman-run:
-          collection: server/tests/APDS.PART2.postman_collection.json
-          environment: server/tests/APDS-Environment.postman_environment.json
+          collection: server/tests/APDS.PART3.postman_collection.json
           insecure: true  # If you're running in a non-HTTPS environment
           
 
