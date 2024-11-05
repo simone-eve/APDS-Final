@@ -5,6 +5,8 @@ import { parse } from 'querystring';
 
 // MongoDB connection string
 const mongoURI = 'mongodb+srv://simoneleroux2003:4IKn1Q2kBs44qaoE@apdscluster0.glasn.mongodb.net/APD'; // Replace with your actual database name
+mongoose.set('debug', true);
+
 
 // Connect to MongoDB
 mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
