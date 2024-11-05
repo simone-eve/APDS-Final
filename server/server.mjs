@@ -103,20 +103,37 @@ const requestHandler = async (req, res) => {
     // Handle adding a new user
     if (req.method === 'POST' && req.url === '/api/users') {
         let body = '';
-
+    
         // Collect data from the request
         req.on('data', chunk => {
             body += chunk.toString(); // Convert Buffer to string
         });
-
+    
         req.on('end', async () => {
             try {
+                // Parse and validate the user data
                 const userData = JSON.parse(body);
                 
-                // Create a new user instance
+                // Check for all required fields
+                const { fullName, idNumber, accountNumber, userId, password } = userData;
+                if (!fullName || !idNumber || !accountNumber || !userId || !password) {
+                    res.writeHead(400, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ message: 'All fields are required.' }));
+                    return;
+                }
+    
+                // Check if the user already exists (by userId)
+                const existingUser = await User.findOne({ userId });
+                if (existingUser) {
+                    res.writeHead(409, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ message: 'User already exists.' }));
+                    return;
+                }
+    
+                // Create a new user instance and save to the database
                 const newUser = new User(userData);
                 await newUser.save();
-
+    
                 res.writeHead(201, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify({ message: 'User added successfully!', user: newUser }));
             } catch (error) {
@@ -127,6 +144,7 @@ const requestHandler = async (req, res) => {
         });
         return; // Prevent further processing after handling this request
     }
+    
 
     // Handle adding a new payment
     if (req.method === 'POST' && req.url === '/api/payments') {
