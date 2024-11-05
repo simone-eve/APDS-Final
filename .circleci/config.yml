@@ -1,0 +1,59 @@
+version: 2.1
+orbs:
+  newman: postman/newman@1.0.0
+# code attribution
+# Adapted from APDS 2023
+# Author: Serena
+# https://github.com/VCSOIT/APDS2023.git
+jobs:
+  # Job to say hello
+  say-hello:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
+      - run:
+          name: "Say hello"
+          command: "echo Hello, World!"
+
+  # Job to run SonarQube analysis
+  sonarqube:
+    working_directory: ~/build
+    docker:
+      - image: sonarsource/sonar-scanner-cli  # Use the Sonar Scanner image directly
+    resource_class: small
+    steps:
+      - checkout
+      - run:
+          name: "Run Sonar Scanner"
+          command: |
+            SONAR_BRANCH="${CIRCLE_BRANCH:-master}"
+            echo "Sonar branch value is: $SONAR_BRANCH"
+            echo "Sonar org value is: $SONAR_ORG"
+            sonar-scanner \
+            -Dsonar.projectKey="$SONAR_PROJECT_KEY" \
+            -Dsonar.organization="$SONAR_ORG" \
+            -Dsonar.host.url=https://sonarcloud.io \
+            -Dsonar.exclusions="**/android/**,**/ios/**" \
+            -Dsonar.login="$SONAR_TOKEN" \
+            -Dsonar.branch.name="$SONAR_BRANCH" \
+            -Dsonar.sources="." \
+            -Dsonar.java.binaries=build  # If using Java, specify the binaries path
+
+  # -----end
+  postman-tests:
+    docker:
+      - image: postman/newman:latest  # Use the official Newman Docker image
+    steps:
+      - checkout
+      - newman/newman-run:
+          collection: server/tests/APDS.PART2.postman_collection.json
+          environment: server/tests/APDS-Environment.postman_environment.json
+          insecure: true  # If you're running in a non-HTTPS environment
+          
+
+workflows:
+  say-hello-workflow:
+    jobs:
+      - sonarqube
+      - postman-tests
