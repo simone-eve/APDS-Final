@@ -106,36 +106,28 @@ const requestHandler = async (req, res) => {
     }
 
     // Handle login for employees
-    if (req.method === 'POST' && req.url === '/api/login') {
-        let body = '';
-
-        // Collect data from the request
-        req.on('data', chunk => {
-            body += chunk.toString(); // Convert Buffer to string
-        });
-
-        req.on('end', async () => {
-            const { email, password } = JSON.parse(body);
-
-            // Find the employee by email and password
-            try {
-                const employee = await Employee.findOne({ email, password }); // You might want to hash the password in real applications
-                if (!employee) {
-                    res.writeHead(401, { 'Content-Type': 'application/json' });
-                    res.end(JSON.stringify({ message: 'Invalid email or password' }));
-                    return;
-                }
-
-                res.writeHead(200, { 'Content-Type': 'application/json' });
-                res.end(JSON.stringify({ message: 'Login successful!' }));
-            } catch (error) {
-                console.error('Error while processing login:', error);
-                res.writeHead(500, { 'Content-Type': 'application/json' });
-                res.end(JSON.stringify({ message: 'Internal server error' }));
+    const Employee = mongoose.model('Employee', new mongoose.Schema({
+        email: String,
+        password: String // In production, make sure to hash the password
+    }));
+    
+    // Login route with brute-force protection
+    app.post('/api/login', bruteforce.prevent, async (req, res) => {
+        const { email, password } = req.body;
+    
+        // Find the employee by email and password
+        try {
+            const employee = await Employee.findOne({ email, password }); // Hashing recommended
+            if (!employee) {
+                return res.status(401).json({ message: 'Invalid email or password' });
             }
-        });
-        return; // Prevent further processing after handling this request
-    }
+    
+            res.status(200).json({ message: 'Login successful!' });
+        } catch (error) {
+            console.error('Error while processing login:', error);
+            res.status(500).json({ message: 'Internal server error' });
+        }
+    });
 
     // Handle adding a new user
     if (req.method === 'POST' && req.url === '/api/users') {
