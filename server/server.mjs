@@ -1,24 +1,33 @@
-import http from 'http';
-import mongoose from 'mongoose';
-import cors from 'cors';
-import { parse } from 'querystring';
-import ExpressBrute from 'express-brute';
-import helmet from 'helmet';
-import morgan from 'morgan';
-import rateLimit from 'express-rate-limit';
-import { body, validationResult } from 'express-validator';
 import express from 'express';
+import helmet from 'helmet';
+import cors from 'cors';
+import morgan from 'morgan';
 import bodyParser from 'body-parser';
+import mongoose from 'mongoose';
+import { body, validationResult } from 'express-validator';
+import rateLimit from 'express-rate-limit';
+import ExpressBrute from 'express-brute';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 app.use(cors());
-app.use(helmet());
+app.use(helmet()); // Helmet should be used here
 app.use(morgan('combined'));
 app.use(express.json());
 
+// Set up rate limiting
+const apiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100,
+  message: 'Too many requests from this IP, please try again after 15 minutes',
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+app.use('/api/', apiLimiter);
+
+// Express Brute setup
 const store = new ExpressBrute.MemoryStore();
 const bruteForce = new ExpressBrute(store, {
   freeRetries: 5,
@@ -27,23 +36,9 @@ const bruteForce = new ExpressBrute(store, {
   lifetime: 60 * 60,
 });
 
-const apiLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100,
-  message: 'Too many requests from this IP, please try again after 15 minutes',
-  standardHeaders: true,
-  legacyHeaders: false,
-});
-
-app.use('/api/userLogin', apiLimiter);
-app.use('/api/login', apiLimiter);
-app.use('/api/users', apiLimiter);
-app.use('/api/payments', apiLimiter);
-
-// MongoDB connection string
+// MongoDB setup
 const mongoURI = 'mongodb+srv://simoneleroux2003:4IKn1Q2kBs44qaoE@apdscluster0.glasn.mongodb.net/APD';
 mongoose.set('debug', true);
-
 mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     console.log('Connected to MongoDB');
@@ -52,6 +47,7 @@ mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
     console.error('MongoDB connection error:', error);
   });
 
+// Schemas
 const employeeSchema = new mongoose.Schema({
   name: { type: String, required: true },
   surname: { type: String, required: true },
@@ -85,134 +81,62 @@ const paymentSchema = new mongoose.Schema({
 
 const PaymentForm = mongoose.model('PaymentForm', paymentSchema);
 
-const requestHandler = async (req, res) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+// Routes
+app.post('/api/login', bruteForce.prevent, async (req, res) => {
+  const { email, password } = req.body;
 
-  if (req.method === 'OPTIONS') {
-    res.writeHead(204);
-    res.end();
-    return;
-  }
-
-  if (req.method === 'POST' && req.url === '/api/login') {
-    bruteForce.prevent(req, res, () => {
-        console.log('Brute force protection activated');
-      let body = '';
-      req.on('data', chunk => {
-        body += chunk.toString();
-      });
-
-      req.on('end', async () => {
-        const { email, password } = JSON.parse(body);
-
-        try {
-          const employee = await Employee.findOne({ email, password });
-          if (!employee) {
-            res.writeHead(401, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ message: 'Invalid email or password' }));
-            return;
-          }
-
-          res.writeHead(200, { 'Content-Type': 'application/json' });
-          res.end(JSON.stringify({ message: 'Login successful!' }));
-        } catch (error) {
-          console.error('Error while processing login:', error);
-          res.writeHead(500, { 'Content-Type': 'application/json' });
-          res.end(JSON.stringify({ message: 'Internal server error' }));
-        }
-      });
-    });
-    return;
-  }
-
-  
-
-if (req.method === 'POST' && req.url === '/api/users') {
-  let bodyData = '';
-
-  // Collect the data chunks
-  req.on('data', chunk => {
-    bodyData += chunk.toString();
-  });
-
-  req.on('end', async () => {
-    try {
-      // Parse the request body
-      const userData = JSON.parse(bodyData);
-      req.body = userData;  // Attach `userData` to `req.body` for `express-validator`
-
-      // Set up validation
-      await body('fullName').isLength({ min: 1 }).withMessage('Full name is required').run(req);
-      await body('idNumber').isLength({ min: 1 }).withMessage('ID number is required').run(req);
-      await body('accountNumber').isLength({ min: 1 }).withMessage('Account number is required').run(req);
-      await body('userId').isLength({ min: 1 }).withMessage('User ID is required').run(req);
-      await body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters').run(req);
-
-      // Collect validation errors
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
-        res.writeHead(400, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ errors: errors.array() }));
-        return;
-      }
-
-      // Check if the user already exists
-      const existingUser = await User.findOne({ userId: userData.userId });
-      if (existingUser) {
-        res.writeHead(409, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ message: 'User already exists.' }));
-        return;
-      }
-
-      // Create and save the new user
-      const newUser = new User(userData);
-      await newUser.save();
-
-      res.writeHead(201, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ message: 'User added successfully!', user: newUser }));
-      
-    } catch (error) {
-      console.error('Error while adding user:', error);
-      res.writeHead(500, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ message: 'Internal server error' }));
+  try {
+    const employee = await Employee.findOne({ email, password });
+    if (!employee) {
+      return res.status(401).json({ message: 'Invalid email or password' });
     }
-  });
-  return;
-}
+    res.status(200).json({ message: 'Login successful!' });
+  } catch (error) {
+    console.error('Error while processing login:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
 
+app.post('/api/users', async (req, res) => {
+  await body('fullName').isLength({ min: 1 }).withMessage('Full name is required').run(req);
+  await body('idNumber').isLength({ min: 1 }).withMessage('ID number is required').run(req);
+  await body('accountNumber').isLength({ min: 1 }).withMessage('Account number is required').run(req);
+  await body('userId').isLength({ min: 1 }).withMessage('User ID is required').run(req);
+  await body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters').run(req);
 
-  if (req.method === 'POST' && req.url === '/api/payments') {
-    let body = '';
-    req.on('data', chunk => {
-      body += chunk.toString();
-    });
-
-    req.on('end', async () => {
-      try {
-        const paymentData = JSON.parse(body);
-
-        const newPayment = new PaymentForm(paymentData);
-        await newPayment.save();
-
-        res.writeHead(201, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ message: 'Payment added successfully!', payment: newPayment }));
-      } catch (error) {
-        console.error('Error while adding payment:', error);
-        res.writeHead(500, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ message: 'Internal server error' }));
-      }
-    });
-    return;
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
   }
 
-  res.writeHead(404, { 'Content-Type': 'text/html' });
-  res.end('<h1>404 Not Found</h1>');
-};
+  try {
+    const existingUser = await User.findOne({ userId: req.body.userId });
+    if (existingUser) {
+      return res.status(409).json({ message: 'User already exists.' });
+    }
 
-const server = http.createServer(requestHandler);
+    const newUser = new User(req.body);
+    await newUser.save();
 
-server.listen(PORT, () => {
+    res.status(201).json({ message: 'User added successfully!', user: newUser });
+  } catch (error) {
+    console.error('Error while adding user:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+app.post('/api/payments', async (req, res) => {
+  try {
+    const newPayment = new PaymentForm(req.body);
+    await newPayment.save();
+    res.status(201).json({ message: 'Payment added successfully!', payment: newPayment });
+  } catch (error) {
+    console.error('Error while adding payment:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+// Start the server
+app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
