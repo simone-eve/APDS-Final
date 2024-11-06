@@ -126,50 +126,61 @@ const requestHandler = async (req, res) => {
     return;
   }
 
-  if (req.method === 'POST' && req.url === '/api/users') {
-    let body = '';
-    req.on('data', chunk => {
-      body += chunk.toString();
-    });
+  
 
-    req.on('end', async () => {
-      try {
-        const userData = JSON.parse(body);
-        const { fullName, idNumber, accountNumber, userId, password } = userData;
+if (req.method === 'POST' && req.url === '/api/users') {
+  let bodyData = '';
 
-        await body('fullName').isLength({ min: 1 }).withMessage('Full name is required').run(req);
-        await body('idNumber').isLength({ min: 1 }).withMessage('ID number is required').run(req);
-        await body('accountNumber').isLength({ min: 1 }).withMessage('Account number is required').run(req);
-        await body('userId').isLength({ min: 1 }).withMessage('User ID is required').run(req);
-        await body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters').run(req);
+  // Collect the data chunks
+  req.on('data', chunk => {
+    bodyData += chunk.toString();
+  });
 
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-          res.writeHead(400, { 'Content-Type': 'application/json' });
-          res.end(JSON.stringify({ errors: errors.array() }));
-          return;
-        }
+  req.on('end', async () => {
+    try {
+      // Parse the request body
+      const userData = JSON.parse(bodyData);
+      req.body = userData;  // Attach `userData` to `req.body` for `express-validator`
 
-        const existingUser = await User.findOne({ userId });
-        if (existingUser) {
-          res.writeHead(409, { 'Content-Type': 'application/json' });
-          res.end(JSON.stringify({ message: 'User already exists.' }));
-          return;
-        }
+      // Set up validation
+      await body('fullName').isLength({ min: 1 }).withMessage('Full name is required').run(req);
+      await body('idNumber').isLength({ min: 1 }).withMessage('ID number is required').run(req);
+      await body('accountNumber').isLength({ min: 1 }).withMessage('Account number is required').run(req);
+      await body('userId').isLength({ min: 1 }).withMessage('User ID is required').run(req);
+      await body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters').run(req);
 
-        const newUser = new User(userData);
-        await newUser.save();
-
-        res.writeHead(201, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ message: 'User added successfully!', user: newUser }));
-      } catch (error) {
-        console.error('Error while adding user:', error);
-        res.writeHead(500, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ message: 'Internal server error' }));
+      // Collect validation errors
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        res.writeHead(400, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ errors: errors.array() }));
+        return;
       }
-    });
-    return;
-  }
+
+      // Check if the user already exists
+      const existingUser = await User.findOne({ userId: userData.userId });
+      if (existingUser) {
+        res.writeHead(409, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ message: 'User already exists.' }));
+        return;
+      }
+
+      // Create and save the new user
+      const newUser = new User(userData);
+      await newUser.save();
+
+      res.writeHead(201, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ message: 'User added successfully!', user: newUser }));
+      
+    } catch (error) {
+      console.error('Error while adding user:', error);
+      res.writeHead(500, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ message: 'Internal server error' }));
+    }
+  });
+  return;
+}
+
 
   if (req.method === 'POST' && req.url === '/api/payments') {
     let body = '';
