@@ -22,8 +22,8 @@ app.use(express.json());
 const store = new ExpressBrute.MemoryStore();
 const bruteForce = new ExpressBrute(store, {
   freeRetries: 5,
-  minWait: 60 * 60 * 1000,
-  maxWait: 60 * 60 * 1000,
+  minWait: 5000,    
+  maxWait: 10000,
   lifetime: 60 * 60,
 });
 
@@ -98,6 +98,7 @@ const requestHandler = async (req, res) => {
 
   if (req.method === 'POST' && req.url === '/api/login') {
     bruteForce.prevent(req, res, () => {
+        console.log('Brute force protection activated');
       let body = '';
       req.on('data', chunk => {
         body += chunk.toString();
