@@ -5,8 +5,8 @@ orbs:
 # Adapted from APDS 2023
 # Author: Serena
 # https://github.com/VCSOIT/APDS2023.git
+
 jobs:
-  # Job to say hello
   say-hello:
     docker:
       - image: cimg/base:stable
@@ -16,11 +16,10 @@ jobs:
           name: "Say hello"
           command: "echo Hello, World!"
 
-  # Job to run SonarQube analysis
   sonarqube:
     working_directory: ~/build
     docker:
-      - image: sonarsource/sonar-scanner-cli  # Use the Sonar Scanner image directly
+      - image: sonarsource/sonar-scanner-cli
     resource_class: small
     steps:
       - checkout
@@ -38,21 +37,44 @@ jobs:
             -Dsonar.login="$SONAR_TOKEN" \
             -Dsonar.branch.name="$SONAR_BRANCH" \
             -Dsonar.sources="." \
-            -Dsonar.java.binaries=build  # If using Java, specify the binaries path
+            -Dsonar.java.binaries=build
 
-  # -----end
-  postman-tests:
+  postman-tests-general:
     docker:
-      - image: postman/newman:latest  # Use the official Newman Docker image
+      - image: postman/newman:latest
     steps:
       - checkout
       - newman/newman-run:
           collection: server/tests/APDS.PART3.postman_collection.json
-          insecure: true  # If you're running in a non-HTTPS environment
-          
+          insecure: true
+
+  postman-tests-brute-ratelimit:
+    docker:
+      - image: postman/newman:latest
+    steps:
+      - checkout
+
+# Test Brute Force Protection
+      - run:
+          name: "Test Brute Force Protection with Multiple Login Attempts"
+          command: |
+            newman run server/tests/APDS.PART3.2.postman_collection2.json \
+              --iteration-count 10 \
+              --env-var "testType=bruteForce"
+      # Test Rate Limiting
+      - run:
+          name: "Test Rate Limiting with Multiple Requests"
+          command: |
+            newman run server/tests/APDS.PART3.2.postman_collection2.json \
+              --iteration-count 100 \
+              --env-var "testType=rateLimit" \
+              --delay-request 100
+
+      
 
 workflows:
   say-hello-workflow:
     jobs:
       - sonarqube
-      - postman-tests
+      - postman-tests-general
+      - postman-tests-brute-ratelimit

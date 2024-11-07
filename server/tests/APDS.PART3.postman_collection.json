@@ -47,7 +47,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"fullName\": \"june2\",\r\n  \"idNumber\": \"1092384758412\",\r\n  \"accountNumber\": \"2094618\",\r\n  \"userId\": \"229917\",\r\n  \"password\": \"123456784\"\r\n}\r\n\r\n",
+					"raw": "{\r\n  \"fullName\": \"june23\",\r\n  \"idNumber\": \"1091384758412\",\r\n  \"accountNumber\": \"2194618\",\r\n  \"userId\": \"219917\",\r\n  \"password\": \"123456784\"\r\n}\r\n\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -263,90 +263,6 @@
 					"path": [
 						"api",
 						"userLogin"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Express Brute",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							""
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"email\": \"testuser@gmail.com\",\r\n    \"password\": \"testpassword\"\r\n}\r\n",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "https://apds-final.onrender.com/api/login",
-					"protocol": "https",
-					"host": [
-						"apds-final",
-						"onrender",
-						"com"
-					],
-					"path": [
-						"api",
-						"login"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Express-Rate-Limit",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							""
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n  \"fullName\": \"John Doe\",\r\n  \"idNumber\": \"1234567890\",\r\n  \"accountNumber\": \"9876543210\",\r\n  \"userId\": \"johndoe123\",\r\n  \"password\": \"securepassword\"\r\n}\r\n",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "https://apds-final.onrender.com/api/users",
-					"protocol": "https",
-					"host": [
-						"apds-final",
-						"onrender",
-						"com"
-					],
-					"path": [
-						"api",
-						"users"
 					]
 				}
 			},
