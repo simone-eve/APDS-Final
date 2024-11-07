@@ -5,6 +5,7 @@ orbs:
 # Adapted from APDS 2023
 # Author: Serena
 # https://github.com/VCSOIT/APDS2023.git
+
 jobs:
   # Job to say hello
   say-hello:
@@ -40,19 +41,32 @@ jobs:
             -Dsonar.sources="." \
             -Dsonar.java.binaries=build  # If using Java, specify the binaries path
 
-  # -----end
+  # Newman job for Postman tests
   postman-tests:
     docker:
       - image: postman/newman:latest  # Use the official Newman Docker image
     steps:
       - checkout
-      - newman/newman-run:
-          collection: server/tests/APDS.PART3.postman_collection.json
-          insecure: true  # If you're running in a non-HTTPS environment
-          
+
+      # Test Rate Limiting by simulating 100 requests
+      - run:
+          name: "Test Rate Limiting with Multiple Requests"
+          command: |
+            newman run server/tests/APDS.PART3.postman_collection.json \
+              --iteration-count 101 \
+              --env-var "testType=rateLimit" \
+              --delay-request 100  # Optional delay (in ms) between requests for more realistic rate-limiting testing
+
+      # Test Brute Force Protection by simulating login attempts
+      - run:
+          name: "Test Brute Force Protection with Multiple Login Attempts"
+          command: |
+            newman run server/tests/APDS.PART3.postman_collection.json \
+              --iteration-count 10 \
+              --env-var "testType=bruteForce"
 
 workflows:
-  say-hello-workflow:
+  main-workflow:
     jobs:
       - sonarqube
       - postman-tests
