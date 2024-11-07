@@ -1,0 +1,477 @@
+{
+	"info": {
+		"_postman_id": "2ede618a-e408-4ea3-b1b3-5548b26276c8",
+		"name": "APDS.PART3",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37441114"
+	},
+	"item": [
+		{
+			"name": "Create User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201 - User Created\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response has success message\", function () {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property(\"message\", \"User added successfully!\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response includes user details\", function () {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.user).to.be.an(\"object\");\r",
+							"    pm.expect(jsonData.user).to.have.property(\"fullName\");\r",
+							"    pm.expect(jsonData.user).to.have.property(\"userId\");\r",
+							"    pm.expect(jsonData.user).to.have.property(\"accountNumber\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"fullName\": \"june2\",\r\n  \"idNumber\": \"1092384758412\",\r\n  \"accountNumber\": \"2094618\",\r\n  \"userId\": \"229917\",\r\n  \"password\": \"123456784\"\r\n}\r\n\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://apds-final.onrender.com/api/users",
+					"protocol": "https",
+					"host": [
+						"apds-final",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Employee Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"employee@example.com\",\r\n  \"password\": \"password123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://apds-final.onrender.com/api/login",
+					"protocol": "https",
+					"host": [
+						"apds-final",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Adding Payment",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains payment added message\", function () {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property(\"message\", \"Payment added successfully!\");\r",
+							"    pm.expect(jsonData).to.have.property(\"payment\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Handle server error\", function () {\r",
+							"    if (pm.response.status === 500) {\r",
+							"        const jsonData = pm.response.json();\r",
+							"        pm.expect(jsonData).to.have.property(\"message\", \"Internal server error\");\r",
+							"    }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"amount\": 2000,\r\n  \"currency\": \"USD\",\r\n  \"provider\": \"Swift\",\r\n  \"recipientName\": \"Jane Doe2\",\r\n  \"accountNumber\": \"1234367890\",\r\n  \"bankName\": \"Global Bank\",\r\n  \"swiftCode\": \"GBL123425\",\r\n  \"verification\": \"Pending\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://apds-final.onrender.com/api/payments",
+					"protocol": "https",
+					"host": [
+						"apds-final",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"api",
+						"payments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Fetch Payments",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is an array of payments\", function () {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.an(\"array\");\r",
+							"    if (jsonData.length > 0) {\r",
+							"        pm.expect(jsonData[0]).to.have.property(\"amount\");\r",
+							"        pm.expect(jsonData[0]).to.have.property(\"recipientName\");\r",
+							"        pm.expect(jsonData[0]).to.have.property(\"bankName\");\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Handle server error\", function () {\r",
+							"    if (pm.response.status === 500) {\r",
+							"        const jsonData = pm.response.json();\r",
+							"        pm.expect(jsonData).to.have.property(\"message\", \"Internal server error\");\r",
+							"    }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://apds-final.onrender.com/api/payments",
+					"protocol": "https",
+					"host": [
+						"apds-final",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"api",
+						"payments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response has user login success message\", function () {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property(\"message\", \"User login successful!\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Handle unauthorized access\", function () {\r",
+							"    if (pm.response.status === 401) {\r",
+							"        const jsonData = pm.response.json();\r",
+							"        pm.expect(jsonData).to.have.property(\"message\", \"Invalid full name, account number, or password\");\r",
+							"    }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"fullName\": \"june\",\r\n  \"accountNumber\": \"2094678\",\r\n  \"password\": \"123456784\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://apds-final.onrender.com/api/userLogin",
+					"protocol": "https",
+					"host": [
+						"apds-final",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"api",
+						"userLogin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Express Brute",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code should be 429 when brute-force limit is hit\", function () {\r",
+							"    pm.response.to.have.status(429);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Brute-force protection message\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Too many requests\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"testuser@gmail.com\",\r\n    \"password\": \"testpassword\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://apds-final.onrender.com/api/login",
+					"protocol": "https",
+					"host": [
+						"apds-final",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Express-Rate-Limit",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code should be 429 when rate limit is hit\", function () {\r",
+							"    pm.response.to.have.status(429);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Rate limiting error message\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Too many requests\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"fullName\": \"John Doe\",\r\n  \"idNumber\": \"1234567890\",\r\n  \"accountNumber\": \"9876543210\",\r\n  \"userId\": \"johndoe123\",\r\n  \"password\": \"securepassword\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://apds-final.onrender.com/api/users",
+					"protocol": "https",
+					"host": [
+						"apds-final",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Express Validator",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Check if the status code is 400 (Bad Request) due to validation errors\r",
+							"pm.test(\"Status code is 400 when validation fails\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"// Parse the JSON response\r",
+							"const jsonData = pm.response.json();\r",
+							"\r",
+							"// Verify that the response contains validation errors\r",
+							"pm.test(\"Response has validation errors\", function () {\r",
+							"    pm.expect(jsonData).to.have.property(\"errors\");\r",
+							"    pm.expect(jsonData.errors).to.be.an(\"array\").that.is.not.empty;\r",
+							"});\r",
+							"\r",
+							"// Check each specific validation error\r",
+							"const expectedErrors = [\r",
+							"    { field: \"fullName\", message: \"Full name is required\" },\r",
+							"    { field: \"idNumber\", message: \"ID number is required\" },\r",
+							"    { field: \"accountNumber\", message: \"Account number is required\" },\r",
+							"    { field: \"password\", message: \"Password must be at least 6 characters\" }\r",
+							"];\r",
+							"\r",
+							"expectedErrors.forEach(error => {\r",
+							"    pm.test(`Check validation error for ${error.field}`, function () {\r",
+							"        const fieldError = jsonData.errors.find(e => e.path === error.field);\r",
+							"        pm.expect(fieldError).to.exist;\r",
+							"        pm.expect(fieldError).to.have.property(\"msg\", error.message);\r",
+							"    });\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"fullName\": \"\",\r\n  \"idNumber\": \"\",\r\n  \"accountNumber\": \"\",\r\n  \"userId\": \"123\",\r\n  \"password\": \"123\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://apds-final.onrender.com/api/users",
+					"protocol": "https",
+					"host": [
+						"apds-final",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Helmet",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"X-Content-Type-Options is set\", function () {\r",
+							"    pm.response.to.have.header(\"X-Content-Type-Options\", \"nosniff\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://apds-final.onrender.com/api/users",
+					"protocol": "https",
+					"host": [
+						"apds-final",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
