@@ -13,12 +13,12 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Status code should be 429 when brute-force limit is hit\", function () {\r",
-							"    pm.response.to.have.status(429);\r",
+							"pm.test(\"Status code should be 401 for invalid login attempts\", function () {\r",
+							"    pm.response.to.have.status(401); // Expect 401 for wrong login attempts\r",
 							"});\r",
 							"\r",
-							"pm.test(\"Brute-force protection message\", function () {\r",
-							"    pm.expect(pm.response.text()).to.include(\"Too many requests\");\r",
+							"pm.test(\"Status code should be 429 when brute-force limit is hit\", function () {\r",
+							"    pm.response.to.have.status(429); // Expect 429 after brute-force limit\r",
 							"});\r",
 							""
 						],
