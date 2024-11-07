@@ -149,10 +149,10 @@ app.post('/api/users', async (req, res) => {
 
     // Create new user with hashed password
     const newUser = new User({
-      fullName: req.body.fullName,
-      idNumber: req.body.idNumber,
-      accountNumber: req.body.accountNumber,
-      userId: req.body.userId,
+      fullName,
+      idNumber,
+      accountNumber,
+      userId,
       password: hashedPassword  // Store the hashed password
     });
 
