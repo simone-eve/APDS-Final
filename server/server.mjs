@@ -7,11 +7,10 @@ import mongoose from 'mongoose';
 import { body, validationResult } from 'express-validator';
 import rateLimit from 'express-rate-limit';
 import ExpressBrute from 'express-brute';
-import bcrypt from 'bcryptjs';
+import bcrypt from 'bcrypt';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const bcrypt = require('bcryptjs');
 
 
 app.use(bodyParser.json());
