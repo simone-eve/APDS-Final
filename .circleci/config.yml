@@ -72,7 +72,7 @@ jobs:
             newman run server/tests/APDS.PART3.3.postman_collection.json \
               --iteration-count 100 \
               --env-var "testType=rateLimit" \
-              --delay-request 100
+              --delay-request 101
 
 workflows:
   say-hello-workflow:

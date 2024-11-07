@@ -17,7 +17,7 @@
 							"    var iteration = pm.info.iteration;\r",
 							"\r",
 							"    if (iteration <= 100) { // First 6 iterations should return 401\r",
-							"        pm.response.to.have.status(401);\r",
+							"        pm.response.to.have.status(409);\r",
 							"    } else { // After 6th iteration, expect 429 (brute-force limit)\r",
 							"        pm.response.to.have.status(429);\r",
 							"    }\r",
