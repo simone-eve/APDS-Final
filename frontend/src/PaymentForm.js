@@ -167,7 +167,7 @@ const PaymentForm = () => {
 
         <button type="submit" className="submit-button">Submit Payment</button>
         {/* Button to navigate to Dashboard */}
-        <button type="button" onClick={() => navigate('/dashboard')} className="dashboard-button">
+        <button type="button" onClick={() => navigate('/userDashboard')} className="dashboard-button">
           Dashboard
         </button>
       </form>

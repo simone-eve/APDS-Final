@@ -7,6 +7,7 @@ import EmpLogin from './EmpLogin';
 import PaymentForm from './PaymentForm';
 import Dashboard from './Dashboard';
 import UserLogin from './UserLogin'; // Import the UserLogin component
+import UserDashboard from './UserDashboard';
 import User from './User';
 function App() {
   console.log("Rendering App component");
@@ -20,6 +21,7 @@ function App() {
           <Route path="/emp-login" element={<EmpLogin />} />
           <Route path="/payment-form" element={<PaymentForm />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/userDashboard" element={<UserDashboard />} />
           <Route path="/user-login" element={<UserLogin />} /> {/* Add UserLogin route */}
           <Route path="/user" element={<User />} /> {/* Add UserLogin route */}
           
