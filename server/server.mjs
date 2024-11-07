@@ -82,40 +82,78 @@ const paymentSchema = new mongoose.Schema({
 const PaymentForm = mongoose.model('PaymentForm', paymentSchema);
 
 // Routes
-app.post('/api/login', bruteForce.prevent, async (req, res) => {
-  const { email, password } = req.body;
-
-  try {
-    const employee = await Employee.findOne({ email, password });
-    if (!employee) {
-      return res.status(401).json({ message: 'Invalid email or password' });
+app.post('/api/login',
+    [
+      body('email').isEmail().withMessage('A valid email is required'),
+      body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters')
+    ],
+    bruteForce.prevent, // Protect against brute-force attacks
+    async (req, res) => {
+      // Check for validation errors
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+      }
+  
+      const { email, password } = req.body;
+  
+      try {
+        // Find the employee by email
+        const employee = await Employee.findOne({ email });
+        if (!employee) {
+          return res.status(401).json({ message: 'Invalid email or password' });
+        }
+  
+        // Compare the provided password with the hashed password in the database
+        const isMatch = await bcrypt.compare(password, employee.password);
+        if (!isMatch) {
+          return res.status(401).json({ message: 'Invalid email or password' });
+        }
+  
+        res.status(200).json({ message: 'Login successful!' });
+      } catch (error) {
+        console.error('Error while processing login:', error);
+        res.status(500).json({ message: 'Internal server error' });
+      }
     }
-    res.status(200).json({ message: 'Login successful!' });
-  } catch (error) {
-    console.error('Error while processing login:', error);
-    res.status(500).json({ message: 'Internal server error' });
-  }
-});
+  );
+
 
 app.post('/api/users', async (req, res) => {
+  // Validate input fields
   await body('fullName').isLength({ min: 1 }).withMessage('Full name is required').run(req);
   await body('idNumber').isLength({ min: 1 }).withMessage('ID number is required').run(req);
   await body('accountNumber').isLength({ min: 1 }).withMessage('Account number is required').run(req);
   await body('userId').isLength({ min: 1 }).withMessage('User ID is required').run(req);
   await body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters').run(req);
 
+  // Check for validation errors
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
 
   try {
+    // Check if user already exists
     const existingUser = await User.findOne({ userId: req.body.userId });
     if (existingUser) {
       return res.status(409).json({ message: 'User already exists.' });
     }
 
-    const newUser = new User(req.body);
+    // Hash and salt the password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(req.body.password, salt);
+
+    // Create new user with hashed password
+    const newUser = new User({
+      fullName: req.body.fullName,
+      idNumber: req.body.idNumber,
+      accountNumber: req.body.accountNumber,
+      userId: req.body.userId,
+      password: hashedPassword  // Store the hashed password
+    });
+
+    // Save the user in the database
     await newUser.save();
 
     res.status(201).json({ message: 'User added successfully!', user: newUser });
@@ -148,20 +186,39 @@ app.get('/api/payments', apiLimiter, async (req, res) => {
 });
 
 // User login route with brute force protection and security middleware
-app.post('/api/userLogin', bruteForce.prevent, async (req, res) => {
-  const { fullName, accountNumber, password } = req.body;
-
-  try {
-    const user = await User.findOne({ fullName, accountNumber, password });
-    if (!user) {
-      return res.status(401).json({ message: 'Invalid full name, account number, or password' });
+app.post('/api/userLogin', bruteForce.prevent, [
+    // Input validation
+    body('fullName').isLength({ min: 1 }).withMessage('Full name is required'),
+    body('accountNumber').isLength({ min: 1 }).withMessage('Account number is required'),
+    body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters')
+  ], async (req, res) => {
+    // Check for validation errors
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
     }
-    res.status(200).json({ message: 'User login successful!' });
-  } catch (error) {
-    console.error('Error while processing user login:', error);
-    res.status(500).json({ message: 'Internal server error' });
-  }
-});
+  
+    const { fullName, accountNumber, password } = req.body;
+  
+    try {
+      // Find the user by fullName and accountNumber
+      const user = await User.findOne({ fullName, accountNumber });
+      if (!user) {
+        return res.status(401).json({ message: 'Invalid full name or account number' });
+      }
+  
+      // Compare the entered password with the hashed password in the database
+      const isPasswordValid = await bcrypt.compare(password, user.password);
+      if (!isPasswordValid) {
+        return res.status(401).json({ message: 'Invalid password' });
+      }
+  
+      res.status(200).json({ message: 'User login successful!' });
+    } catch (error) {
+      console.error('Error while processing user login:', error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  });
 
 // Update payment verification with PUT request
 app.put('/api/payments/:id', apiLimiter, async (req, res) => {
