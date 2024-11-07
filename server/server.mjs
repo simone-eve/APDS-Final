@@ -121,52 +121,56 @@ app.post('/api/login',
   );
 
 
-app.post('/api/users', async (req, res) => {
-  // Validate input fields
-  await body('fullName').isLength({ min: 1 }).withMessage('Full name is required').run(req);
-  await body('idNumber').isLength({ min: 1 }).withMessage('ID number is required').run(req);
-  await body('accountNumber').isLength({ min: 1 }).withMessage('Account number is required').run(req);
-  await body('userId').isLength({ min: 1 }).withMessage('User ID is required').run(req);
-  await body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters').run(req);
-
-  // Check for validation errors
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
-
-  try {
-    // Check if user already exists
-    const existingUser = await User.findOne({ userId: req.body.userId });
-    if (existingUser) {
-      return res.status(409).json({ message: 'User already exists.' });
-    }
-
-    // Hash and salt the password
-    const saltRounds = 10; 
-    const salt = await bcrypt.genSalt(saltRounds); // Generates a unique salt for each user
+  app.post('/api/users', async (req, res) => {
+    // Validate input fields
+    await body('fullName').isLength({ min: 1 }).withMessage('Full name is required').run(req);
+    await body('idNumber').isLength({ min: 1 }).withMessage('ID number is required').run(req);
+    await body('accountNumber').isLength({ min: 1 }).withMessage('Account number is required').run(req);
+    await body('userId').isLength({ min: 1 }).withMessage('User ID is required').run(req);
+    await body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters').run(req);
   
-    // Hash the password with the salt
-    const hashedPassword = await bcrypt.hash(password, salt);
-
-    // Create new user with hashed password
-    const newUser = new User({
-      fullName,
-      idNumber,
-      accountNumber,
-      userId,
-      password,  // Store the hashed password
-    });
-
-    // Save the user in the database
-    await newUser.save();
-
-    res.status(201).json({ message: 'User added successfully!', user: newUser });
-  } catch (error) {
-    console.error('Error while adding user:', error);
-    res.status(500).json({ message: 'Internal server error' });
-  }
-});
+    // Check for validation errors
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+  
+    try {
+      // Check if user already exists
+      const existingUser = await User.findOne({ userId: req.body.userId });
+      if (existingUser) {
+        return res.status(409).json({ message: 'User already exists.' });
+      }
+  
+      // Extract password from request body
+      const { fullName, idNumber, accountNumber, userId, password } = req.body;
+  
+      // Hash and salt the password
+      const saltRounds = 10; 
+      const salt = await bcrypt.genSalt(saltRounds); // Generates a unique salt for each user
+    
+      // Hash the password with the salt
+      const hashedPassword = await bcrypt.hash(password, salt);
+  
+      // Create new user with hashed password
+      const newUser = new User({
+        fullName,
+        idNumber,
+        accountNumber,
+        userId,
+        password: hashedPassword // Store the hashed password
+      });
+  
+      // Save the user in the database
+      await newUser.save();
+  
+      res.status(201).json({ message: 'User added successfully!', user: newUser });
+    } catch (error) {
+      console.error('Error while adding user:', error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  });
+  
 
 app.post('/api/payments', async (req, res) => {
   try {
