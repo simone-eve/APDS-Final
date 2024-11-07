@@ -60,12 +60,11 @@ jobs:
               --iteration-count 10 \
               --env-var "testType=bruteForce"
 
-postman-tests-ratelimit:
+  postman-tests-ratelimit:
     docker:
       - image: postman/newman:latest
     steps:
       - checkout
-
       # Test Rate Limiting
       - run:
           name: "Test Rate Limiting with Multiple Requests"
@@ -74,8 +73,6 @@ postman-tests-ratelimit:
               --iteration-count 100 \
               --env-var "testType=rateLimit" \
               --delay-request 100
-
-      
 
 workflows:
   say-hello-workflow:
