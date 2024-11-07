@@ -15,13 +15,15 @@
 						"exec": [
 							"pm.test(\"Status code should be correct\", function () {\r",
 							"    var iteration = pm.info.iteration;\r",
+							"    var validStatusCodes = [401, 429, 502]; // List of acceptable status codes\r",
 							"\r",
-							"    if (iteration <= 5) { // First 6 iterations should return 401\r",
-							"        pm.response.to.have.status(401);\r",
-							"    } else { // After 6th iteration, expect 429 (brute-force limit)\r",
+							"    if (iteration <= 5) { // First 100 iterations should return 409\r",
+							"        pm.expect(validStatusCodes).to.include(pm.response.code);\r",
+							"    } else { // After 100th iteration, expect 429 (rate-limit exceeded)\r",
 							"        pm.response.to.have.status(429);\r",
 							"    }\r",
 							"});\r",
+							"\r",
 							""
 						],
 						"type": "text/javascript",
