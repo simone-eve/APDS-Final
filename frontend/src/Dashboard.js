@@ -63,6 +63,9 @@ const Dashboard = () => {
   const handleAddUserClick = () => {
     navigate('/user');
   };
+  const handleAddEmployeeClick = () => {
+    navigate('/employees');
+  };
 
   if (loading) {
     return <p className="loading-message">Loading payments...</p>;
@@ -117,6 +120,7 @@ const Dashboard = () => {
         </table>
       )}
       <button className="button" onClick={handleAddUserClick}>Add new user</button>
+      <button className="button" onClick={handleAddEmployeeClick}>Add new employee</button>
     </div>
   );
 };

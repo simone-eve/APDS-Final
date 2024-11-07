@@ -252,6 +252,50 @@ app.put('/api/payments/:id', apiLimiter, async (req, res) => {
   }
 });
 
+app.post('/api/register', [
+  // Input validation
+  body('name').notEmpty().withMessage('Name is required'),
+  body('surname').notEmpty().withMessage('Surname is required'),
+  body('email').isEmail().withMessage('A valid email is required'),
+  body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters'),
+], async (req, res) => {
+  // Check for validation errors
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+  }
+
+  const { name, surname, email, password } = req.body;
+
+  try {
+      // Check if the email is already in use
+      const existingEmployee = await Employee.findOne({ email });
+      if (existingEmployee) {
+          return res.status(409).json({ message: 'Email is already registered' });
+      }
+
+      // Hash the password
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(password, salt);
+
+      // Create and save the new employee
+      const newEmployee = new Employee({
+          name,
+          surname,
+          email,
+          password: hashedPassword,
+      });
+      await newEmployee.save();
+
+      res.status(201).json({ message: 'Employee registered successfully!' });
+  } catch (error) {
+      console.error('Error while registering employee:', error);
+      res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+
+
 // Start the server
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
