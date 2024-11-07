@@ -79,5 +79,5 @@ workflows:
     jobs:
      # - sonarqube
      # - postman-tests-general
-      - postman-tests-brute
-    #  - postman-tests-ratelimit
+     # - postman-tests-brute
+      - postman-tests-ratelimit
