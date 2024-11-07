@@ -1,0 +1,74 @@
+{
+	"info": {
+		"_postman_id": "d4323d87-4f72-4d01-861b-2e893dd6012e",
+		"name": "test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37441114"
+	},
+	"item": [
+		{
+			"name": "Create User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201 - User Created\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response has success message\", function () {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property(\"message\", \"User added successfully!\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response includes user details\", function () {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.user).to.be.an(\"object\");\r",
+							"    pm.expect(jsonData.user).to.have.property(\"fullName\");\r",
+							"    pm.expect(jsonData.user).to.have.property(\"userId\");\r",
+							"    pm.expect(jsonData.user).to.have.property(\"accountNumber\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"fullName\": \"june2\",\r\n  \"idNumber\": \"1092384758412\",\r\n  \"accountNumber\": \"2094618\",\r\n  \"userId\": \"229917\",\r\n  \"password\": \"123456784\"\r\n}\r\n\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://apds-final.onrender.com/api/users",
+					"protocol": "https",
+					"host": [
+						"apds-final",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
