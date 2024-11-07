@@ -70,9 +70,9 @@ jobs:
           name: "Test Rate Limiting with Multiple Requests"
           command: |
             newman run server/tests/APDS.PART3.3.postman_collection.json \
-              --iteration-count 100 \
+              --iteration-count 101 \
               --env-var "testType=rateLimit" \
-              --delay-request 101
+              --delay-request 100
 
 workflows:
   say-hello-workflow:
