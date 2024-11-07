@@ -136,19 +136,19 @@ app.post('/api/login',
     }
   
     try {
+      // Destructure the fields from req.body
+      const { fullName, idNumber, accountNumber, userId, password } = req.body;
+  
       // Check if user already exists
-      const existingUser = await User.findOne({ userId: req.body.userId });
+      const existingUser = await User.findOne({ userId });
       if (existingUser) {
         return res.status(409).json({ message: 'User already exists.' });
       }
   
-      // Extract password from request body
-      const { fullName, idNumber, accountNumber, userId, password } = req.body;
-  
       // Hash and salt the password
       const saltRounds = 10; 
       const salt = await bcrypt.genSalt(saltRounds); // Generates a unique salt for each user
-    
+  
       // Hash the password with the salt
       const hashedPassword = await bcrypt.hash(password, salt);
   
@@ -170,6 +170,7 @@ app.post('/api/login',
       res.status(500).json({ message: 'Internal server error' });
     }
   });
+  
   
 
 app.post('/api/payments', async (req, res) => {
