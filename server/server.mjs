@@ -136,6 +136,55 @@ app.post('/api/payments', async (req, res) => {
   }
 });
 
+// Get all payments with security middleware
+app.get('/api/payments', apiLimiter, async (req, res) => {
+  try {
+    const payments = await PaymentForm.find();
+    res.status(200).json(payments);
+  } catch (error) {
+    console.error('Error fetching payments:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+// User login route with brute force protection and security middleware
+app.post('/api/userLogin', bruteForce.prevent, async (req, res) => {
+  const { fullName, accountNumber, password } = req.body;
+
+  try {
+    const user = await User.findOne({ fullName, accountNumber, password });
+    if (!user) {
+      return res.status(401).json({ message: 'Invalid full name, account number, or password' });
+    }
+    res.status(200).json({ message: 'User login successful!' });
+  } catch (error) {
+    console.error('Error while processing user login:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+// Update payment verification with PUT request
+app.put('/api/payments/:id', apiLimiter, async (req, res) => {
+  const paymentId = req.params.id;
+
+  try {
+    const updatedPayment = await PaymentForm.findByIdAndUpdate(
+      paymentId,
+      { verification: 'Verified' },
+      { new: true }
+    );
+
+    if (!updatedPayment) {
+      return res.status(404).json({ message: 'Payment not found' });
+    }
+
+    res.status(200).json(updatedPayment);
+  } catch (error) {
+    console.error('Error while verifying payment:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
 // Start the server
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
