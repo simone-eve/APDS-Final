@@ -1,23 +1,23 @@
 {
 	"info": {
-		"_postman_id": "bf0e3c7e-4461-4423-9b0e-6d8dcb6bb71e",
-		"name": "APDS.PART3.2",
+		"_postman_id": "3d38f9b0-9e92-4dd8-abcd-3af6e1fe620d",
+		"name": "APDS.PART3.3",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "37441114"
 	},
 	"item": [
 		{
-			"name": "Express Brute",
+			"name": "Express-Rate-Limit",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Status code should be 429 when brute-force limit is hit\", function () {\r",
+							"pm.test(\"Status code should be 429 when rate limit is hit\", function () {\r",
 							"    pm.response.to.have.status(429);\r",
 							"});\r",
 							"\r",
-							"pm.test(\"Brute-force protection message\", function () {\r",
+							"pm.test(\"Rate limiting error message\", function () {\r",
 							"    pm.expect(pm.response.text()).to.include(\"Too many requests\");\r",
 							"});\r",
 							""
@@ -32,7 +32,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"email\": \"testuser@gmail.com\",\r\n    \"password\": \"testpassword\"\r\n}\r\n",
+					"raw": "{\r\n  \"fullName\": \"John Doe\",\r\n  \"idNumber\": \"1234567890\",\r\n  \"accountNumber\": \"9876543210\",\r\n  \"userId\": \"johndoe123\",\r\n  \"password\": \"securepassword\"\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -40,7 +40,7 @@
 					}
 				},
 				"url": {
-					"raw": "https://apds-final.onrender.com/api/login",
+					"raw": "https://apds-final.onrender.com/api/users",
 					"protocol": "https",
 					"host": [
 						"apds-final",
@@ -49,7 +49,7 @@
 					],
 					"path": [
 						"api",
-						"login"
+						"users"
 					]
 				}
 			},

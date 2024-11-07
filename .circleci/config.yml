@@ -48,24 +48,29 @@ jobs:
           collection: server/tests/APDS.PART3.postman_collection.json
           insecure: true
 
-  postman-tests-brute-ratelimit:
+  postman-tests-brute:
     docker:
       - image: postman/newman:latest
     steps:
       - checkout
-
-# Test Brute Force Protection
       - run:
           name: "Test Brute Force Protection with Multiple Login Attempts"
           command: |
             newman run server/tests/APDS.PART3.2.postman_collection.json \
               --iteration-count 10 \
               --env-var "testType=bruteForce"
+
+postman-tests-ratelimit:
+    docker:
+      - image: postman/newman:latest
+    steps:
+      - checkout
+
       # Test Rate Limiting
       - run:
           name: "Test Rate Limiting with Multiple Requests"
           command: |
-            newman run server/tests/APDS.PART3.2.postman_collection.json \
+            newman run server/tests/APDS.PART3.3.postman_collection.json \
               --iteration-count 100 \
               --env-var "testType=rateLimit" \
               --delay-request 100
@@ -77,4 +82,5 @@ workflows:
     jobs:
       - sonarqube
       - postman-tests-general
-      - postman-tests-brute-ratelimit
+      - postman-tests-brute
+      - postman-tests-ratelimit
