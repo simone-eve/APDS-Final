@@ -58,14 +58,14 @@ jobs:
       - run:
           name: "Test Brute Force Protection with Multiple Login Attempts"
           command: |
-            newman run server/tests/APDS.PART3.2.postman_collection2.json \
+            newman run server/tests/APDS.PART3.2.postman_collection.json \
               --iteration-count 10 \
               --env-var "testType=bruteForce"
       # Test Rate Limiting
       - run:
           name: "Test Rate Limiting with Multiple Requests"
           command: |
-            newman run server/tests/APDS.PART3.2.postman_collection2.json \
+            newman run server/tests/APDS.PART3.2.postman_collection.json \
               --iteration-count 100 \
               --env-var "testType=rateLimit" \
               --delay-request 100
