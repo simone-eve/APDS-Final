@@ -155,7 +155,7 @@ app.post('/api/users', async (req, res) => {
       idNumber,
       accountNumber,
       userId,
-      password: hashedPassword  // Store the hashed password
+      password,  // Store the hashed password
     });
 
     // Save the user in the database
