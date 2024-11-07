@@ -141,8 +141,11 @@ app.post('/api/users', async (req, res) => {
     }
 
     // Hash and salt the password
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(req.body.password, salt);
+    const saltRounds = 10; 
+    const salt = await bcrypt.genSalt(saltRounds); // Generates a unique salt for each user
+  
+    // Hash the password with the salt
+    const hashedPassword = await bcrypt.hash(password, salt);
 
     // Create new user with hashed password
     const newUser = new User({
