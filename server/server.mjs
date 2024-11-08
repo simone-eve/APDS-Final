@@ -304,8 +304,14 @@ app.post('/api/register', [
 });
 
 
-let server = https.createServer(options, app)
-console.log(PORT)
-server.listen(PORT)
-console.log(`Server is running on http://localhost:${PORT}`);
+// let server = https.createServer(options, app)
+// console.log(PORT)
+// server.listen(PORT)
+// console.log(`Server is running on http://localhost:${PORT}`);
+
+const server = http.createServer(requestHandler);
+
+server.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+});
 
