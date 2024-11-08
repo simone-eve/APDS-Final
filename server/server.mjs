@@ -14,10 +14,13 @@ import https from 'https';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const privateKey = process.env.PRIVATE_KEY;
+const certificate = process.env.CERTIFICATE;
+
 const options = {
-  key: fs.readFileSync('keys/privatekey.pem'),
-  cert: fs.readFileSync('keys/certificate.pem')
-}
+  key: privateKey,
+  cert: certificate,
+};
 
 app.use(bodyParser.json());
 app.use(cors());

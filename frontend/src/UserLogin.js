@@ -16,7 +16,7 @@ function UserLogin() {
 //Author:  Unkown
 //Link: https://stackoverflow.com/questions/54952355/how-to-post-data-from-react
         // Send login data to backend
-        const response = await fetch('http://localhost:3000/api/userLogin', {
+        const response = await fetch('https://localhost:3000/api/userLogin', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ fullName, accountNumber, password }),
