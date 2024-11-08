@@ -310,7 +310,7 @@ app.post('/api/register', [
 // server.listen(PORT)
 // console.log(`Server is running on http://localhost:${PORT}`);
 
-const server = http.createServer(requestHandler);
+
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
