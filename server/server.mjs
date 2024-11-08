@@ -8,10 +8,16 @@ import { body, validationResult } from 'express-validator';
 import rateLimit from 'express-rate-limit';
 import ExpressBrute from 'express-brute';
 import bcrypt from 'bcryptjs';
+import fs from 'fs';
+import https from 'https';
+
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-
+const options = {
+  key: fs.readFileSync('keys/privatekey.pem'),
+  cert: fs.readFileSync('keys/certificate.pem')
+}
 
 app.use(bodyParser.json());
 app.use(cors());
@@ -295,8 +301,8 @@ app.post('/api/register', [
 });
 
 
+let server = https.createServer(options, app)
+console.log(PORT)
+server.listen(PORT)
+console.log(`Server is running on http://localhost:${PORT}`);
 
-// Start the server
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-});
