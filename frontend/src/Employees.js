@@ -17,7 +17,7 @@ const Employees = () => {
         setLoading(true); // Set loading to true when submitting
 
         try {
-            const response = await fetch('http://localhost:3000/api/register', {
+            const response = await fetch('https://apds-final.onrender.com/api/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
