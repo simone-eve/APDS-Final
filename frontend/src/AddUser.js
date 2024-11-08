@@ -23,7 +23,7 @@ const AddUser = () => {
     };
 
     try {
-      const response = await fetch('http://localhost:3000/api/users', {
+      const response = await fetch('https://apds-final.onrender.com/api/users', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

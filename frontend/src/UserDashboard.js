@@ -15,7 +15,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchPayments = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/payments');
+        const response = await fetch('https://apds-final.onrender.com/api/payments');
         if (!response.ok) {
           throw new Error('Failed to fetch payments');
         }
