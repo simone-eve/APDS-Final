@@ -8,13 +8,31 @@ const Employees = () => {
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
     const [loading, setLoading] = useState(false); // New loading state
-//___________code attribution___________
-//The following code was taken from Stack Overflow
-//Author:  Unkown
-//Link: https://stackoverflow.com/questions/54952355/how-to-post-data-from-react
+
+    //___________code attribution___________
+    //The following code was taken from Stack Overflow
+    //Author:  Unkown
+    //Link: https://stackoverflow.com/questions/54952355/how-to-post-data-from-react
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         setLoading(true); // Set loading to true when submitting
+
+        // Email validation regex
+        const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+        if (!emailRegex.test(email)) {
+            setLoading(false);
+            setMessage('Please enter a valid email address');
+            return;
+        }
+
+        // Password validation regex (example: at least one letter, one number, and at least 6 characters)
+        const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
+        if (!passwordRegex.test(password)) {
+            setLoading(false);
+            setMessage('Password must be at least 6 characters long and contain both letters and numbers');
+            return;
+        }
 
         try {
             const response = await fetch('https://apds-final.onrender.com/api/register', {

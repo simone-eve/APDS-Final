@@ -14,28 +14,50 @@ const EmpLogin = () => {
         event.preventDefault(); // Prevent default form submission
         setLoading(true); // Set loading to true
 
-        const response = await fetch('https://apds-final.onrender.com/api/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ name, surname, email, password }), // Send data
-        });
+        // Email validation regex
+        const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+        if (!emailRegex.test(email)) {
+            setLoading(false);
+            setMessage('Please enter a valid email address');
+            return;
+        }
 
-        const data = await response.json(); // Parse the JSON response
-        setLoading(false); // Set loading to false
+        // Password validation regex (example: at least one letter, one number, and at least 6 characters)
+        const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
+        if (!passwordRegex.test(password)) {
+            setLoading(false);
+            setMessage('Password must be at least 6 characters long and contain both letters and numbers');
+            return;
+        }
 
-        if (response.ok) {
-            setMessage(data.message); // Success message
-            setName(''); // Clear input fields
-            setSurname('');
-            setEmail('');
-            setPassword('');
+        try {
+            const response = await fetch('https://apds-final.onrender.com/api/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ name, surname, email, password }), // Send data
+            });
 
-            // Redirect to Dashboard after successful login
-            navigate('/dashboard'); // Navigate to Dashboard page
-        } else {
-            setMessage(data.message); // Error message
+            const data = await response.json(); // Parse the JSON response
+            setLoading(false); // Set loading to false
+
+            if (response.ok) {
+                setMessage(data.message); // Success message
+                setName(''); // Clear input fields
+                setSurname('');
+                setEmail('');
+                setPassword('');
+
+                // Redirect to Dashboard after successful login
+                navigate('/dashboard'); // Navigate to Dashboard page
+            } else {
+                setMessage(data.message); // Error message
+            }
+        } catch (error) {
+            console.error('Login Error:', error);
+            setLoading(false);
+            setMessage('An error occurred. Please try again later.');
         }
     };
 

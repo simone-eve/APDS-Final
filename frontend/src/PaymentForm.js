@@ -1,20 +1,28 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
-import './PaymentForm.css'; // Import your CSS file
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import './PaymentForm.css';
 
 const PaymentForm = () => {
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     amount: '',
-    currency: 'USD', // Default to USD
-    provider: 'SWIFT', // Default to SWIFT
+    currency: 'USD',
+    provider: 'SWIFT',
     recipientName: '',
     accountNumber: '',
     bankName: '',
     swiftCode: '',
   });
+  const [message, setMessage] = useState('');
+  const [fullName, setFullName] = useState('');
 
-  const [message, setMessage] = useState(''); // For success or error messages
+  useEffect(() => {
+    // Retrieve the full name from sessionStorage
+    const storedFullName = sessionStorage.getItem('fullName');
+    if (storedFullName) {
+      setFullName(storedFullName);
+    }
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -23,12 +31,12 @@ const PaymentForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Submitting form data:", formData); // Log form data for debugging
 
-    // Create a new object with formData and add verification
+    // Include the fullName in paymentData
     const paymentData = {
       ...formData,
-      verification: 'Pending', // Set verification to 'Pending' directly here
+      verification: 'Pending',
+      userFullName: fullName, // Add full name to payment data
     };
 
     try {
@@ -37,20 +45,17 @@ const PaymentForm = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(paymentData), // Send the new object
+        body: JSON.stringify(paymentData),
       });
 
-      console.log("Response status:", response.status); // Log response status
       const result = await response.json();
-      console.log("Server response:", result); // Log server response for debugging
 
       if (response.ok) {
         setMessage('Payment added successfully!');
-        // Reset the form
         setFormData({
           amount: '',
-          currency: 'USD', // Reset to default currency
-          provider: 'SWIFT', // Reset to default provider
+          currency: 'USD',
+          provider: 'SWIFT',
           recipientName: '',
           accountNumber: '',
           bankName: '',
@@ -96,7 +101,6 @@ const PaymentForm = () => {
               <option value="GBP">GBP</option>
               <option value="AUD">AUD</option>
               <option value="CAD">CAD</option>
-              {/* Add more currencies as needed */}
             </select>
           </label>
         </div>
@@ -112,7 +116,6 @@ const PaymentForm = () => {
               <option value="SWIFT">SWIFT</option>
               <option value="SEPA">SEPA</option>
               <option value="ACH">ACH</option>
-              {/* Add more providers as needed */}
             </select>
           </label>
         </div>
@@ -164,9 +167,7 @@ const PaymentForm = () => {
             />
           </label>
         </div>
-
         <button type="submit" className="submit-button">Submit Payment</button>
-        {/* Button to navigate to Dashboard */}
         <button type="button" onClick={() => navigate('/userDashboard')} className="dashboard-button">
           Dashboard
         </button>
@@ -175,4 +176,4 @@ const PaymentForm = () => {
   );
 };
 
-export default PaymentForm;
+export default PaymentForm; // Make sure to export the component properly
