@@ -1,7 +1,7 @@
-// User.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import './User.css'; // Import your CSS file for styling
+
 //___________code attribution___________
 //The following code was taken from Stack Overflow
 //Author:  Unkown
@@ -19,6 +19,31 @@ const User = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
+
+    // Regex for ID number (example: valid South African ID number - 13 digits)
+    const idNumberRegex = /^[0-9]{13}$/;
+    // Regex for Account number (example: 10-digit account number)
+    const accountNumberRegex = /^[0-9]{10}$/;
+    // Regex for Password (example: at least 8 characters, 1 letter, and 1 number)
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+
+    if (!idNumberRegex.test(idNumber)) {
+      setLoading(false);
+      setMessage('Invalid ID number. Please enter a valid 13-digit number.');
+      return;
+    }
+
+    if (!accountNumberRegex.test(accountNumber)) {
+      setLoading(false);
+      setMessage('Invalid Account number. Please enter a valid 10-digit number.');
+      return;
+    }
+
+    if (!passwordRegex.test(password)) {
+      setLoading(false);
+      setMessage('Password must be at least 8 characters long and contain both letters and numbers.');
+      return;
+    }
 
     const user = {
       fullName,
@@ -62,10 +87,7 @@ const User = () => {
   const handleDashboardClick = () => {
     navigate('/dashboard'); // Navigate to Dashboard
   };
-//___________code attribution___________
-//The following code was taken from Stack Overflow
-//Author:  Unkown
-//Link: https://stackoverflow.com/questions/54952355/how-to-post-data-from-react
+
   return (
     <div className="user-container">
       <h1>Add New User</h1>

@@ -11,10 +11,7 @@ function UserLogin() {
 
     const handleLogin = async (event) => {
         event.preventDefault();
-        //___________code attribution___________
-//The following code was taken from Stack Overflow
-//Author:  Unkown
-//Link: https://stackoverflow.com/questions/54952355/how-to-post-data-from-react
+        
         // Send login data to backend
         const response = await fetch('https://apds-final.onrender.com/api/userLogin', {
             method: 'POST',
@@ -26,6 +23,11 @@ function UserLogin() {
 
         if (response.ok) {
             setMessage(data.message);
+            
+            // Save the account number to session storage or local storage
+            sessionStorage.setItem('accountNumber', accountNumber); // For session storage
+            // or use localStorage.setItem('accountNumber', accountNumber); // For local storage
+            
             navigate('/payment-form'); // Redirect to PaymentForm on successful login
         } else {
             setMessage(data.message || 'Login failed. Please try again.');

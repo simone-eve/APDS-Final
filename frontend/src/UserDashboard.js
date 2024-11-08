@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Dashboard.css';
-//___________code attribution___________
-//The following code was taken from Stack Overflow
-//Author:  Unkown
-//Link: https://stackoverflow.com/questions/54952355/how-to-post-data-from-react
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -20,7 +16,16 @@ const Dashboard = () => {
           throw new Error('Failed to fetch payments');
         }
         const data = await response.json();
-        setPayments(data);
+
+        // Get account number from session storage and log it for debugging
+        const userAccountNumber = sessionStorage.getItem('accountNumber');
+        console.log("Logged-in user's account number:", userAccountNumber);
+
+        // Filter payments for the logged-in user and log the filtered results
+        const userPayments = data.filter(payment => payment.accountNumber === userAccountNumber);
+        console.log("Filtered user payments:", userPayments);
+
+        setPayments(userPayments);
       } catch (error) {
         setError(error.message);
       } finally {
@@ -30,8 +35,6 @@ const Dashboard = () => {
 
     fetchPayments();
   }, []);
-
-
 
   const handleAddUserClick = () => {
     navigate('/payment-form');
