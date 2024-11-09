@@ -1,85 +1,100 @@
 /* Basic reset for margins and paddings */
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
-  
-  /* Main container styling */
-  .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Center align items horizontally */
-    justify-content: center; /* Center content vertically */
-    height: 100vh; /* Full viewport height */
-    background-color: #f5f5f5; /* Light background color */
-  }
-  
-  /* Heading styling */
-  h1 {
-    margin-bottom: 20px;
-    color: #333; /* Dark text color */
-    font-size: 2em; /* Larger font size */
-  }
-  
-  /* Form styling */
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Main container styling */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #f0f2f5; /* Softer background color */
+}
+
+/* Heading styling */
+h1 {
+  margin-bottom: 20px;
+  color: #000000;
+  font-size: 2em;
+  font-weight: 600;
+}
+
+/* Form styling */
+form {
+  background: #ffffff; /* Clean white background */
+  padding: 40px; /* Increased padding for spacious feel */
+  border-radius: 12px; /* Softer, more refined rounded corners */
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1); /* Softer shadow */
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Label styling */
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  font-size: 0.95em;
+  color: #555; /* Subtle text color for labels */
+}
+
+/* Input field styling */
+input {
+  width: 100%;
+  padding: 14px; /* Slightly more padding for comfort */
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 16px;
+  transition: border-color 0.3s;
+  background-color: #f9f9f9; /* Light background for inputs */
+}
+
+/* Input focus effect */
+input:focus {
+  border-color: #218838; /* Professional blue color on focus */
+  outline: none;
+  background-color: #fff; /* Lighter background on focus */
+}
+
+/* Button styling */
+button {
+  background-color: #218838; /* Deep blue background */
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 14px 24px;
+  cursor: pointer;
+  font-size: 1em;
+  font-weight: 600;
+  transition: background-color 0.3s, transform 0.2s;
+  width: 100%;
+  max-width: 150px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Button hover effect */
+button:hover {
+  background-color: #218838; /* Darker blue on hover */
+  transform: translateY(-2px);
+}
+
+/* Button active effect */
+button:active {
+  background-color: #218838; /* Even darker blue when clicked */
+  transform: translateY(0);
+}
+
+/* Responsive adjustments */
+@media (max-width: 500px) {
   form {
-    background: gold; /* Changed background to gold */
-    padding: 30px; /* Increased padding around the form */
-    border-radius: 8px; /* Rounded corners */
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Enhanced shadow */
-    width: 400px; /* Fixed width for the form */
-    display: flex; /* Flexbox for vertical alignment of form elements */
-    flex-direction: column; /* Vertical layout of form elements */
-    align-items: center; /* Center align form elements horizontally */
+    width: 90%;
+    padding: 30px; /* Adjusted padding for smaller screens */
   }
-  
-  /* Label styling */
-  label {
-    display: block; /* Block display for labels */
-    margin-bottom: 5px; /* Space below each label */
-    font-weight: bold; /* Bold text for labels */
-    font-size: 1em; /* Set font size */
-  }
-  
-  /* Input field styling */
-  input {
-    width: 100%; /* Full width */
-    padding: 12px; /* Increased padding inside the input */
-    margin-bottom: 20px; /* Space below each input */
-    border: 1px solid #ccc; /* Light gray border */
-    border-radius: 4px; /* Rounded corners for inputs */
-    font-size: 16px; /* Font size */
-    transition: border-color 0.3s; /* Smooth border color transition */
-  }
-  
-  /* Input focus effect */
-  input:focus {
-    border-color: #007bff; /* Change border color on focus */
-    outline: none; /* Remove default outline */
-  }
-  
-  /* Button styling */
-  button {
-    background-color: #007bff; /* Blue background */
-    color: white; /* White text */
-    border: none; /* No border */
-    border-radius: 4px; /* Rounded corners */
-    padding: 12px; /* Increased padding inside the button */
-    cursor: pointer; /* Pointer cursor on hover */
-    font-size: 16px; /* Font size */
-    transition: background-color 0.3s; /* Smooth background color transition */
-  }
-  
-  /* Button hover effect */
-  button:hover {
-    background-color: #0056b3; /* Darker blue on hover */
-  }
-  
-  /* Responsive adjustments */
-  @media (max-width: 500px) {
-    form {
-      width: 90%; /* Full width on small screens */
-    }
-  }
-  
+}

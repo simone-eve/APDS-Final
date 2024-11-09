@@ -10,7 +10,7 @@
 
 h1 {
     text-align: center; /* Center the heading */
-    color: #333; /* Dark color for the heading */
+    color: #000000; /* Dark color for the heading */
 }
 
 form {
@@ -34,13 +34,13 @@ input[type="password"] {
 
 input[type="text"]:focus,
 input[type="password"]:focus {
-    border-color: #007bff; /* Change border color on focus */
+    border-color: #218838; /* Change border color on focus */
     outline: none; /* Remove outline */
 }
 
 button {
     padding: 10px; /* Padding for the button */
-    background-color: #007bff; /* Button background color */
+    background-color: #218838; /* Button background color */
     color: #fff; /* Text color for button */
     border: none; /* Remove border */
     border-radius: 4px; /* Rounded corners for button */
@@ -50,7 +50,7 @@ button {
 }
 
 button:hover {
-    background-color: #0056b3; /* Darker shade on hover */
+    background-color: #218838; /* Darker shade on hover */
 }
 
 .loading-message,

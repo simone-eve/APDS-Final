@@ -1,50 +1,92 @@
+/* Main payment form styling */
 .payment-form {
-    max-width: 600px;
-    margin: auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    background-color: #f9f9f9;
+  max-width: 600px; /* Reduced max-width for a smaller form */
+  margin: auto;
+  padding: 15px; /* Reduced padding for a more compact layout */
+  border: 1px solid #ddd;
+  border-radius: 8px; /* Slightly smaller border radius */
+  background-color: #ffffff;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); /* Softer shadow */
+}
+
+/* Heading styling */
+h2 {
+  text-align: center;
+  font-size: 1.5em; /* Slightly smaller heading */
+  color: #000000;
+  margin-bottom: 10px; /* Reduced space below heading */
+}
+
+/* Form group styling */
+.form-group {
+  margin-bottom: 12px; /* Less space between form groups */
+}
+
+/* Label styling */
+.form-group label {
+  display: block;
+  margin-bottom: 5px; /* Reduced space under labels */
+  font-weight: 600;
+  color: #555;
+}
+
+/* Input and select styling */
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 10px; /* Reduced padding for inputs */
+  border: 1px solid #ccc;
+  border-radius: 5px; /* Slightly smaller border radius */
+  font-size: 0.95em; /* Slightly smaller font */
+  transition: border-color 0.3s, background-color 0.3s;
+  background-color: #fafafa;
+}
+
+/* Input focus effect */
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #218838;
+  background-color: #fff;
+  outline: none;
+}
+
+/* Submit button styling */
+.submit-button {
+  width: 100%;
+  padding: 12px; /* Reduced padding to make the button more compact */
+  background-color: #218838;
+  color: white;
+  font-size: 1em;
+  border: none;
+  border-radius: 5px; /* Smaller border radius */
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s, transform 0.2s;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Submit button hover effect */
+.submit-button:hover {
+  background-color: #1e7e34; /* Darker shade on hover */
+  transform: translateY(-2px);
+}
+
+/* Message styling */
+.message {
+  margin-bottom: 12px;
+  text-align: center;
+  font-size: 0.95em; /* Smaller message font size */
+  color: #28a745;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .payment-form {
+    padding: 10px; /* Further reduced padding for mobile */
+    width: 90%; /* Ensure full width on mobile */
   }
-  
+
   h2 {
-    text-align: center;
+    font-size: 1.3em; /* Even smaller heading on mobile */
   }
-  
-  .form-group {
-    margin-bottom: 15px;
-  }
-  
-  .form-group label {
-    display: block;
-    margin-bottom: 5px;
-  }
-  
-  .form-group input,
-  .form-group select {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  .submit-button {
-    width: 100%;
-    padding: 10px;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .submit-button:hover {
-    background-color: #218838;
-  }
-  
-  .message {
-    margin-bottom: 15px;
-    text-align: center;
-    color: green; /* Change this color based on success or error */
-  }
-  
+}

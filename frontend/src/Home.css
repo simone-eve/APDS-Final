@@ -1,54 +1,131 @@
-/* Home.css */
-
-.home-container {
+/* Basic reset for margins and paddings */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Main container styling */
+  body, html {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f5f7fa;
+    margin: 0;
+  }
+  
+  /* Home container */
+  .home-container {
     text-align: center;
-    margin: 50px auto; /* Center the container */
-    padding: 40px;
-    max-width: 600px; /* Limit the width for better readability */
-    background: linear-gradient(to bottom right, #4e54c8, #8f94fb); /* Updated gradient for a softer look */
-    border-radius: 20px; /* Slightly more rounded corners */
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3); /* Stronger shadow for depth */
-    color: #ffffff; /* White text for better contrast */
-    font-family: 'Helvetica Neue', Arial, sans-serif; /* More modern font */
-}
-
-.home-container h1 {
-    font-size: 2.8em; /* Larger heading for emphasis */
-    margin-bottom: 15px; /* More spacing below heading */
-    letter-spacing: 1px; /* Slight spacing between letters */
-}
-
-.home-container p {
-    font-size: 1.3em; /* Slightly larger paragraph size */
-    margin-bottom: 30px; /* More spacing below paragraph */
-    line-height: 1.5; /* Increased line height for readability */
-}
-
-.home-buttons {
-    display: flex; /* Flexbox for layout */
-    justify-content: center; /* Center buttons */
-    gap: 30px; /* Increased spacing between buttons */
-}
-
-.home-button {
-    padding: 15px 35px; /* Padding for buttons */
-    font-size: 1.1em; /* Increased button font size */
-    background-color: #ffffff; /* Button background color */
-    color: #4e54c8; /* Button text color matching the gradient */
-    border: 2px solid transparent; /* Border for hover effect */
-    border-radius: 25px; /* More rounded button corners */
-    cursor: pointer; /* Pointer cursor */
-    transition: background-color 0.3s, transform 0.3s, border-color 0.3s; /* Smooth transitions */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-}
-
-.home-button:hover {
-    background-color: #f8f8f8; /* Light background on hover */
-    transform: translateY(-2px); /* Slightly lift button on hover */
-    border-color: #4e54c8; /* Border color on hover */
-}
-
-.home-button:focus {
-    outline: none; /* Remove default outline */
-    box-shadow: 0 0 5px rgba(78, 84, 200, 0.5); /* Add focus ring */
-}
+    padding: 70px;
+    width: 95%;
+    max-width: 900px;
+    min-height: 30vh;
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.15);
+    color: #333333;
+  }
+  
+  /* Heading styling */
+  .home-container h1 {
+    font-size: 3em;
+    margin-bottom: 25px;
+    letter-spacing: 0.8px;
+    color: #333333;
+  }
+  
+  /* Paragraph styling */
+  .home-container p {
+    font-size: 1.3em;
+    margin-bottom: 40px;
+    line-height: 1.8;
+    color: #666666;
+  }
+  
+  /* Form styling */
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+  }
+  
+  /* Input and text area styling */
+  form input[type="text"],
+  form textarea {
+    width: 100%;
+    max-width: 600px;
+    padding: 15px;
+    font-size: 1.2em;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
+  }
+  
+  /* Button container styling */
+  .home-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+  
+  /* Button styling */
+  .home-button {
+    padding: 20px 40px;
+    font-size: 1.3em;
+    background-color: #218838;
+    color: #ffffff;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 300px;
+  }
+  
+  .home-button:hover {
+    background-color: #218838;
+    transform: translateY(-3px);
+  }
+  
+  .home-button:focus {
+    outline: none;
+    box-shadow: 0 0 8px rgba(0, 119, 182, 0.5);
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .home-container {
+      padding: 50px;
+    }
+  
+    .home-container h1 {
+      font-size: 2.7em;
+    }
+  
+    .home-buttons {
+      gap: 20px;
+    }
+  
+    .home-button {
+      padding: 18px 40px;
+      font-size: 1.2em;
+    }
+  
+    form input[type="text"],
+    form textarea {
+      max-width: 100%;
+    }
+  
+    .home-button {
+      max-width: 100%;
+    }
+  }
+  

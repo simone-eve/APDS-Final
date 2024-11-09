@@ -1,87 +1,105 @@
 /* General Dashboard Styles */
 .dashboard-container {
     max-width: 1200px; /* Limit the width of the dashboard */
-    margin: 20px auto; /* Center the dashboard */
-    padding: 30px; /* Increased padding for a more spacious look */
-    background-color: #f9f9f9; /* Light background for a softer look */
-    border-radius: 10px; /* Rounded corners */
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15); /* Enhanced shadow for depth */
-    font-family: 'Arial', sans-serif; /* Consistent font */
+    margin: 30px auto; /* Increased margin for better spacing */
+    padding: 40px; /* Increased padding for a more spacious and refined look */
+    background-color: #ffffff; /* White background for clarity */
+    border-radius: 10px; /* Softer rounded corners for a modern feel */
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1); /* More pronounced shadow for depth */
+    font-family: 'Roboto', sans-serif; /* Modern, clean font */
+    overflow: hidden; /* Prevent overflow issues */
 }
 
+/* Heading Styles */
 h2 {
-    font-size: 2.5em; /* Bigger heading font */
-    margin-bottom: 20px; /* Space below heading */
-    color: #333; /* Darker color for better contrast */
-    text-align: center; /* Center the heading */
-    font-weight: bold; /* Bold text for emphasis */
+    font-size: 2.5em; /* Larger heading for better emphasis */
+    margin-bottom: 30px; /* More space below heading for breathing room */
+    color: #2d4d26; /* Dark green for a professional contrast */
+    text-align: center; /* Centered heading for balance */
+    font-weight: 600; /* Slightly bold for emphasis without being too heavy */
+    letter-spacing: 1px; /* Subtle letter spacing for a polished look */
 }
 
 /* Table Styles */
 .payments-table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px;
+    margin-top: 40px; /* Increased margin for better separation */
+    background-color: #fafafa; /* Light background for the table for better contrast */
 }
 
 .payments-table th, .payments-table td {
-    border: 1px solid #dee2e6; /* Light border for table */
-    padding: 15px; /* Padding for cells */
-    text-align: left; /* Align text to left */
-    font-size: 1em; /* Standard font size */
+    border: 1px solid #e0e0e0; /* Light border for a cleaner, more professional look */
+    padding: 15px; /* Slightly increased padding for better readability */
+    text-align: left; /* Left-aligned text for consistency */
+    font-size: 1em; /* Standard font size for table text */
+    color: #333; /* Dark text for better readability */
 }
 
 .payments-table th {
-    background-color: #007bff; /* Primary color for header */
-    color: white; /* White text for contrast */
-    text-transform: uppercase; /* Uppercase text */
+    background-color: #28a745; /* Green background for header */
+    color: #ffffff; /* White text for contrast */
+    text-transform: uppercase; /* Uppercase for emphasis */
+    font-weight: 600; /* Slightly bold header text */
+    letter-spacing: 1px; /* Subtle spacing for headers */
+    padding: 18px; /* Added padding for better header spacing */
 }
 
 .payments-table tr:nth-child(even) {
-    background-color: #f2f2f2; /* Light gray for even rows */
+    background-color: #f7f7f7; /* Light gray shade for alternating rows */
 }
 
 .payments-table tr:hover {
-    background-color: #e0e7ff; /* Change hover effect for better visibility */
-    transition: background-color 0.3s; /* Smooth transition */
+    background-color: #e1f2d1; /* Light green hover effect */
+    transition: background-color 0.3s ease; /* Smooth transition */
 }
 
 /* Loading and Error Messages */
 .loading-message, .error-message {
-    font-size: 1.2em; /* Increased font size for visibility */
-    color: #dc3545; /* Red color for error messages */
-    margin: 20px 0; /* Space around messages */
-    text-align: center; /* Center the messages */
+    font-size: 1.3em; /* Slightly larger font size for better visibility */
+    color: #dc3545; /* Red for error messages */
+    margin: 25px 0; /* Added margin for spacing */
+    text-align: center; /* Centered alignment */
+    font-weight: 600; /* Bold text for emphasis */
 }
 
 /* Button Styles */
 .button {
-    padding: 10px 20px; /* Button padding */
-    color: white; /* Button text color */
-    background-color: #007bff; /* Button background color */
+    padding: 14px 28px; /* Slightly larger padding for buttons */
+    color: #ffffff; /* Button text color */
+    background-color: #28a745; /* Green background for button */
     border: none; /* No border */
-    border-radius: 5px; /* Rounded corners for button */
+    border-radius: 8px; /* Rounded corners for buttons */
     cursor: pointer; /* Pointer cursor on hover */
-    transition: background-color 0.3s; /* Smooth transition */
-    display: block; /* Display as block to center */
-    margin: 20px auto; /* Center the button */
+    transition: background-color 0.3s ease; /* Smooth background-color transition */
+    display: inline-block; /* Center the button */
+    margin: 30px auto; /* Add margin to space out the button */
+    font-size: 1.1em; /* Slightly larger font for better readability */
+    text-align: center; /* Center text inside button */
 }
 
 .button:hover {
-    background-color: #0056b3; /* Darker shade on hover */
+    background-color: #218838; /* Darker green on hover */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow on hover for interactivity */
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
     .dashboard-container {
-        padding: 20px; /* Less padding on smaller screens */
+        padding: 25px; /* Reduced padding on smaller screens */
     }
 
     h2 {
-        font-size: 2em; /* Smaller heading on mobile */
+        font-size: 2em; /* Smaller heading on mobile for better fit */
+        margin-bottom: 20px; /* Less space below heading */
     }
 
     .payments-table th, .payments-table td {
-        padding: 10px; /* Less padding in table cells on mobile */
+        padding: 12px; /* Adjust padding for better fit on mobile */
+        font-size: 0.9em; /* Slightly smaller font size for better fit */
+    }
+
+    .button {
+        padding: 12px 24px; /* Adjust button padding for mobile */
     }
 }
