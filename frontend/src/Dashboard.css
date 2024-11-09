@@ -3,7 +3,7 @@
     max-width: 1200px; /* Limit the width of the dashboard */
     margin: 20px auto; /* Center the dashboard */
     padding: 30px; /* Increased padding for a more spacious look */
-    background-color: #f9f9f9; /* Light background for a softer look */
+    background-color: #a1da94; /* Light background for a softer look */
     border-radius: 10px; /* Rounded corners */
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15); /* Enhanced shadow for depth */
     font-family: 'Arial', sans-serif; /* Consistent font */
@@ -32,7 +32,7 @@ h2 {
 }
 
 .payments-table th {
-    background-color: #007bff; /* Primary color for header */
+    background-color: #218838; /* Primary color for header */
     color: white; /* White text for contrast */
     text-transform: uppercase; /* Uppercase text */
 }
@@ -58,7 +58,7 @@ h2 {
 .button {
     padding: 10px 20px; /* Button padding */
     color: white; /* Button text color */
-    background-color: #007bff; /* Button background color */
+    background-color: #218838; /* Button background color */
     border: none; /* No border */
     border-radius: 5px; /* Rounded corners for button */
     cursor: pointer; /* Pointer cursor on hover */
@@ -68,7 +68,7 @@ h2 {
 }
 
 .button:hover {
-    background-color: #0056b3; /* Darker shade on hover */
+    background-color: #218838; /* Darker shade on hover */
 }
 
 /* Responsive Design */
