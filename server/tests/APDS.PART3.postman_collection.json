@@ -7,7 +7,7 @@
 	},
 	"item": [
 		{
-			"name": "Create User",
+			"name": "Register User",
 			"event": [
 				{
 					"listen": "test",
@@ -47,7 +47,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"fullName\": \"june2324\",\r\n  \"idNumber\": \"1095384758412\",\r\n  \"accountNumber\": \"2194518\",\r\n  \"userId\": \"21949127\",\r\n  \"password\": \"123456784\"\r\n}\r\n\r\n",
+					"raw": "{\r\n  \"fullName\": \"Sally\",\r\n  \"idNumber\": \"1095384711412\",\r\n  \"accountNumber\": \"2191118\",\r\n  \"userId\": \"21949107\",\r\n  \"password\": \"12345678\"\r\n}\r\n\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -71,13 +71,129 @@
 			"response": []
 		},
 		{
-			"name": "Employee Login",
+			"name": "Register Employee",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Check if the response status is as expected\r",
+							"pm.test(\"Status code is 201 or 400/409\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([201, 400, 409]);\r",
+							"});\r",
+							"\r",
+							"// Test for successful registration\r",
+							"pm.test(\"Employee registered successfully\", function () {\r",
+							"    if (pm.response.code === 201) {\r",
+							"        pm.expect(pm.response.json().message).to.equal(\"Employee registered successfully!\");\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"// Test for validation errors\r",
+							"pm.test(\"Validation errors handled correctly\", function () {\r",
+							"    if (pm.response.code === 400) {\r",
+							"        const errors = pm.response.json().errors;\r",
+							"        pm.expect(errors).to.be.an(\"array\");\r",
+							"        pm.expect(errors.length).to.be.at.least(1);\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"// Test for email conflict\r",
+							"pm.test(\"Email conflict handled correctly\", function () {\r",
+							"    if (pm.response.code === 409) {\r",
+							"        pm.expect(pm.response.json().message).to.equal(\"Email is already registered\");\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"// General error handling\r",
+							"pm.test(\"Response should contain a message\", function () {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property(\"message\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"email\": \"employee@example.com\",\r\n  \"password\": \"password123\"\r\n}",
+					"raw": "{\r\n    \"name\": \"Mary\",\r\n    \"surname\": \"Lou\",\r\n    \"email\": \"marylou@example.com\",\r\n    \"password\": \"12345678\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://apds-final.onrender.com/api/register",
+					"protocol": "https",
+					"host": [
+						"apds-final",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"api",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Employee Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Check if the response status is as expected\r",
+							"pm.test(\"Status code is 200, 400, or 401\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 400, 401]);\r",
+							"});\r",
+							"\r",
+							"// Test for successful login\r",
+							"pm.test(\"Login successful\", function () {\r",
+							"    if (pm.response.code === 200) {\r",
+							"        pm.expect(pm.response.json().message).to.equal(\"Login successful!\");\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"// Test for validation errors\r",
+							"pm.test(\"Validation errors handled correctly\", function () {\r",
+							"    if (pm.response.code === 400) {\r",
+							"        const errors = pm.response.json().errors;\r",
+							"        pm.expect(errors).to.be.an(\"array\");\r",
+							"        pm.expect(errors.length).to.be.at.least(1);\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"// Test for invalid credentials\r",
+							"pm.test(\"Invalid credentials handled correctly\", function () {\r",
+							"    if (pm.response.code === 401) {\r",
+							"        pm.expect(pm.response.json().message).to.equal(\"Invalid email or password\");\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"//\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"marylou@example.com\",\r\n    \"password\": \"12345678\"\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -95,6 +211,63 @@
 					"path": [
 						"api",
 						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response has user login success message\", function () {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property(\"message\", \"User login successful!\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Handle unauthorized access\", function () {\r",
+							"    if (pm.response.status === 401) {\r",
+							"        const jsonData = pm.response.json();\r",
+							"        pm.expect(jsonData).to.have.property(\"message\", \"Invalid full name, account number, or password\");\r",
+							"    }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"fullName\": \"Sally\",\r\n  \"accountNumber\": \"2191118\",\r\n  \"password\": \"12345678\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://apds-final.onrender.com/api/userLogin",
+					"protocol": "https",
+					"host": [
+						"apds-final",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"api",
+						"userLogin"
 					]
 				}
 			},
@@ -206,63 +379,6 @@
 					"path": [
 						"api",
 						"payments"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "User Login",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 200\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});\r",
-							"\r",
-							"pm.test(\"Response has user login success message\", function () {\r",
-							"    const jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData).to.have.property(\"message\", \"User login successful!\");\r",
-							"});\r",
-							"\r",
-							"pm.test(\"Handle unauthorized access\", function () {\r",
-							"    if (pm.response.status === 401) {\r",
-							"        const jsonData = pm.response.json();\r",
-							"        pm.expect(jsonData).to.have.property(\"message\", \"Invalid full name, account number, or password\");\r",
-							"    }\r",
-							"});\r",
-							""
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n  \"fullName\": \"june\",\r\n  \"accountNumber\": \"2094678\",\r\n  \"password\": \"123456784\"\r\n}\r\n",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "https://apds-final.onrender.com/api/userLogin",
-					"protocol": "https",
-					"host": [
-						"apds-final",
-						"onrender",
-						"com"
-					],
-					"path": [
-						"api",
-						"userLogin"
 					]
 				}
 			},

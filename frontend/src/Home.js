@@ -23,7 +23,7 @@ function Home() {
   return (
     <div className="home-container">
     <img src="https://i.postimg.cc/YCkzmLW8/Apds-Logo-removebg-preview-1.png" alt="Employee Dashboard" />
-    <h1>Welcome to TransWorld Bank Customer International Payments Portal</h1>
+    <h1>Welcome to TransWorld Bank International Payments Portal</h1>
     <p>Please Login to Proceed to the next page</p>
     <div className="home-buttons">
       <button className="home-button" onClick={handleEmpClick}>Employee</button>
