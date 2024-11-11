@@ -98,6 +98,13 @@ The TransWorld Bank Customer Portal is a secure app for making international pay
 - The **User ID** unique identifier assigned to the individual within the system for login and access purposes.
 - The **Password** chosen by the employee (or set by the individual) for securing the user account.
 
+![Add new Employee](https://github.com/user-attachments/assets/f467b1b7-7642-4022-97b2-a5b8686462f1)
+
+- The **Name** of the employee being added to the system.
+- The **Surname** The employee's last name or family name.
+- The **Email** The employee's email address, which will be used for communication and account access.
+- The **Password** chosen for the employee’s account, either set by the employee or by the administrator.
+
 ## Non-Functional Requirements
 - **Security:** Passwords are stored using a strong hashing algorithm, with salting applied.
 - **Privacy:** Adherence to data privacy policies to safeguard user information.
@@ -105,10 +112,13 @@ The TransWorld Bank Customer Portal is a secure app for making international pay
 - **Performance:** System responds within 2 seconds under normal load conditions.
 
 ## Usage
-1. To begin, users must register for an account by tapping the **Register** button and filling in essential personal information.
-2. After registering, users can log in by tapping the **Login** button and entering their credentials.
-3. The dashboard provides an overview of recent transactions and features a **New Payment** button to initiate an international transaction.
-4. Users fill in key details on the payment form and tap the **Pay Now** button to process the transaction.
+1. To begin, users will view the **Welcome Page** which contains a Welcome Message and 2 buttons to chosen from.
+2. The buttons are **Employee** and **Login**, so employees will click on the **Employees** Button and login and Users will click on the **Users** Button and login.
+3. The **Employee Login** requires the employee to enter thier **Name**, **Surname**, **Email** and **Password** and click **Login**
+4. The **User Login** requires the user to enter thier **Full Name**, **Account Number** and **Password** and click **Login**
+5. Once the Employee has logged in they will be taken to their **Dashboard** where they can view incoming payments and **Verify** them, **Add New User** and **Add new Employee**.
+6. Once the User is logged in they can add **Payments** by filling in the **Amount**, **Currency**, **Provider**, **Recipient Name**, **Account Number**, **Bank Name** and **SWIFT Code** and clicking **Submit Payment**.
+7. They will them be able to view thier Payments in thier **Dashboard**.
 
 ## Security Features
 - **Express Brute:** Middleware that limits requests from a single IP address to prevent brute force attacks.
