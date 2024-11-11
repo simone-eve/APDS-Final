@@ -60,7 +60,7 @@ The TransWorld Bank Customer Portal is a secure app for making international pay
 
 ### Payment DashBoard Feature
 
-![Payment Dashboard1](https://github.com/user-attachments/assets/72500e2f-9629-4045-9b0a-1ff4089d9dc0)
+![UserDashboard](https://github.com/user-attachments/assets/f7949538-6ee5-4c9f-8084-07e796395c5f)
 
 - The **Amount** total sum of money being transferred or exchanged.
 - The **Currency** type of money being used in the transaction (e.g., USD, EUR, ZAR).
@@ -75,7 +75,9 @@ The TransWorld Bank Customer Portal is a secure app for making international pay
 
 ### DashBoard Feature
 
-![Dashboard1](https://github.com/user-attachments/assets/da137a20-ff9a-46c6-a212-aa31c1175f71)
+![Dashboard](https://github.com/user-attachments/assets/dc5d3582-51cc-4bb3-b7c0-357c6e41618d)
+
+![Dashboard logo](https://github.com/user-attachments/assets/2d3e829d-fb28-43d8-8cac-acd197d747b6)
 
 - The **Amount** total sum of money that the employee needs to transfer or exchange for the transaction.
 - The **Currency** specific type of money the employee will use in the transaction (e.g., USD, EUR, ZAR).
@@ -88,7 +90,7 @@ The TransWorld Bank Customer Portal is a secure app for making international pay
 
 ### Add User Feature
 
-![Add new User1](https://github.com/user-attachments/assets/f6704531-0c7d-40a0-a830-e665a9b70fe7)
+![Add new User](https://github.com/user-attachments/assets/ae367eab-3c80-4c89-8cb6-b4b0beecd95e)
 
 - The **Full Name** complete name of the individual the employee is registering or adding to the system.
 - The **ID Number** unique identification number assigned to the individual (e.g., national ID, employee ID).
