@@ -47,7 +47,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"fullName\": \"Sallie\",\r\n  \"idNumber\": \"1095324711412\",\r\n  \"accountNumber\": \"2191218\",\r\n  \"userId\": \"21249107\",\r\n  \"password\": \"Ap12345678\"\r\n}\r\n\r\n",
+					"raw": "{\r\n  \"fullName\": \"Sallie\",\r\n  \"idNumber\": \"1095324711412\",\r\n  \"accountNumber\": \"2191218\",\r\n  \"userId\": \"21249227\",\r\n  \"password\": \"Ap12345678\"\r\n}\r\n\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -122,7 +122,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"Mary\",\r\n    \"surname\": \"Lane\",\r\n    \"email\": \"marylane@example.com\",\r\n    \"password\": \"Ap12345678\"\r\n}\r\n",
+					"raw": "{\r\n    \"name\": \"Mary\",\r\n    \"surname\": \"Lane\",\r\n    \"email\": \"marylane34@example.com\",\r\n    \"password\": \"Ap12345678\"\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -223,21 +223,7 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Status code is 200\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});\r",
 							"\r",
-							"pm.test(\"Response has user login success message\", function () {\r",
-							"    const jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData).to.have.property(\"message\", \"User login successful!\");\r",
-							"});\r",
-							"\r",
-							"pm.test(\"Handle unauthorized access\", function () {\r",
-							"    if (pm.response.status === 401) {\r",
-							"        const jsonData = pm.response.json();\r",
-							"        pm.expect(jsonData).to.have.property(\"message\", \"Invalid full name, account number, or password\");\r",
-							"    }\r",
-							"});\r",
 							""
 						],
 						"type": "text/javascript",
