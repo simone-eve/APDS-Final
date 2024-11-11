@@ -16,7 +16,7 @@ The TransWorld Bank Customer Portal is a secure app for making international pay
 ## Detailed Breakdown Of Each Feature
 ### WELCOME PAGE
 
-![Welcome Page](https://github.com/user-attachments/assets/df3695f2-e2c2-4c3d-bd4e-828c8332f330)
+![Welcome](https://github.com/user-attachments/assets/777e5fe8-627e-458c-a411-3d2d3609dbf4)
 
 - The Welcome page welcomes the user to the platform annd gives them 2 options which are "Emp" and "User".
 - It starts with the Message "Welcome to the Employee DashBoard".
