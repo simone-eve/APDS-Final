@@ -121,6 +121,7 @@ const Dashboard = () => {
       )}
       <button className="button" onClick={handleAddUserClick}>Add new user</button>
       <button className="button" onClick={handleAddEmployeeClick}>Add new employee</button>
+      <img src="https://i.postimg.cc/YCkzmLW8/Apds-Logo-removebg-preview-1.png" alt="Employee Dashboard" />
     </div>
   );
 };

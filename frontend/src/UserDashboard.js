@@ -50,6 +50,7 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard-container">
+      <img src="https://i.postimg.cc/YCkzmLW8/Apds-Logo-removebg-preview-1.png" alt="Employee Dashboard" />
       <h2>Payments Dashboard</h2>
       {payments.length === 0 ? (
         <p>No payments available.</p>
@@ -84,6 +85,7 @@ const Dashboard = () => {
         </table>
       )}
       <button className="button" onClick={handleAddUserClick}>Make New Payment</button>
+      
     </div>
   );
 };
