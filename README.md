@@ -26,7 +26,7 @@ The TransWorld Bank Customer Portal is a secure app for making international pay
 
 ### EMPLOYEE LOGIN PAGE
 
-![Employee Login](https://github.com/user-attachments/assets/86d1bf03-7f0a-4fff-829b-53d62d042de1)
+![Employee Login](https://github.com/user-attachments/assets/5ef015fb-df43-49a3-824a-50258da5fa4b)
 
 - The Employee Login page provides a straightforward interface for employees to login in to their accounts.
 - It begins with the **Name** field, validated to ensure consistency with registered details.
@@ -37,7 +37,7 @@ The TransWorld Bank Customer Portal is a secure app for making international pay
 
 ### User Login Feature
 
-![User Login1](https://github.com/user-attachments/assets/296de9c4-2c68-4eeb-b455-f2d9198ef254)
+![User Login](https://github.com/user-attachments/assets/71399fe6-1b3e-46c2-90b8-8516c010ac6c)
 
 - The **Full Name** field verifies the user’s identity by matching it with registered records.
 - The **Account Number** field uniquely identifies the user’s specific bank account, ensuring that the login is linked to the correct account.
@@ -45,7 +45,7 @@ The TransWorld Bank Customer Portal is a secure app for making international pay
 
 ### Payment Form
 
-![Payment Form1](https://github.com/user-attachments/assets/e908a194-c9bc-4e5c-a6c5-66885f82d8ff)
+![Payment Form](https://github.com/user-attachments/assets/bc0c6aa7-4113-416e-82b3-0358435452e4)
 
 - The **Amount** field specifies the sum to be transferred.
 - The **Currency** field designates the currency type (e.g., USD, GBP) for the transaction.
