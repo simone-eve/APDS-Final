@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import './Employees.css'; // Adjust the path if necessary
+
 
 const Employees = () => {
     const [name, setName] = useState('');
@@ -8,6 +10,7 @@ const Employees = () => {
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
     const [loading, setLoading] = useState(false); // New loading state
+    const navigate = useNavigate(); 
 
     //___________code attribution___________
     //The following code was taken from Stack Overflow
@@ -18,6 +21,7 @@ const Employees = () => {
         event.preventDefault();
         setLoading(true); // Set loading to true when submitting
 
+        
         // Email validation regex
         const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
         if (!emailRegex.test(email)) {
@@ -64,6 +68,9 @@ const Employees = () => {
             setMessage('An error occurred. Please try again later.'); // Network error message
         }
     };
+    const handleDashboardClick = () => {
+        navigate('/dashboard'); // Navigate to Dashboard
+      };
 
     return (
         <div>
@@ -114,6 +121,9 @@ const Employees = () => {
                     </label>
                 </div>
                 <button type="submit" disabled={loading}>Register</button>
+                <button onClick={handleDashboardClick} className="dashboard-button">
+                Dashboard
+                </button>
                 {/* Disable button while loading */}
             </form>
             {loading && <p>Loading...</p>} {/* Show loading indicator */}

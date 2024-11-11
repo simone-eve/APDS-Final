@@ -77,6 +77,7 @@ jobs:
 workflows:
   say-hello-workflow:
     jobs:
+      - sonarqube
       - postman-tests-general
       - postman-tests-brute:
           requires:

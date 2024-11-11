@@ -47,7 +47,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"fullName\": \"Sally\",\r\n  \"idNumber\": \"1095384711412\",\r\n  \"accountNumber\": \"2191118\",\r\n  \"userId\": \"21949107\",\r\n  \"password\": \"12345678\"\r\n}\r\n\r\n",
+					"raw": "{\r\n  \"fullName\": \"Sallie\",\r\n  \"idNumber\": \"1095324711412\",\r\n  \"accountNumber\": \"2191218\",\r\n  \"userId\": \"21249107\",\r\n  \"password\": \"12345678\"\r\n}\r\n\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -122,7 +122,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"Mary\",\r\n    \"surname\": \"Lou\",\r\n    \"email\": \"marylou@example.com\",\r\n    \"password\": \"12345678\"\r\n}\r\n",
+					"raw": "{\r\n    \"name\": \"Mary\",\r\n    \"surname\": \"Lee\",\r\n    \"email\": \"marylou33@example.com\",\r\n    \"password\": \"12345678\"\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
