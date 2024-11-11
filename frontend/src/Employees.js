@@ -67,7 +67,7 @@ const Employees = () => {
 
     return (
         <div>
-            <h1>Welcome, Please Register</h1>
+            <h1>Add New Employee</h1>
             <form onSubmit={handleSubmit}>
                 <div>
                     <label>
