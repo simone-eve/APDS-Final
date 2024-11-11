@@ -1,4 +1,4 @@
-![Apds_Logo-removebg-preview (1)](https://github.com/user-attachments/assets/9b1347ae-0508-47da-a18c-5c47358fac20)
+![Apds_Logo-removebg-preview (1)](https://github.com/user-attachments/assets/ad8e1c0a-5616-4d02-a484-b63f447b07f1)
 
 # TransWorld Bank App - A Secure Customer International Payments Portal (POE)
 ## Description
